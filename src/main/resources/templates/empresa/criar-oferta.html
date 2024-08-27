@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Oferta de Estágio</title>
+    <!-- Bootstrap CSS -->
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Sistema de Gerenciamento</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/empresas/dashboard}">Dashboard</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Main content -->
+<div class="container mt-5">
+    <h2 class="text-center">Criar Oferta de Estágio</h2>
+    <form th:action="@{/empresas/salvar-oferta}" method="post">
+        <div class="mb-3">
+            <label for="atividadePrincipal" class="form-label">Atividade Principal</label>
+            <input type="text" class="form-control" id="atividadePrincipal" name="atividadePrincipal" placeholder="Digite a atividade principal" required>
+        </div>
+        <div class="mb-3">
+            <label for="chSemanal" class="form-label">Carga Horária Semanal</label>
+            <input type="text" class="form-control" id="chSemanal" name="chSemanal" placeholder="Digite a carga horária semanal" required>
+        </div>
+        <div class="mb-3">
+            <label for="valorPago" class="form-label">Valor Pago</label>
+            <input type="number" step="0.01" class="form-control" id="valorPago" name="valorPago" placeholder="Digite o valor pago" required>
+        </div>
+        <div class="mb-3">
+            <label for="valeTransporte" class="form-label">Vale Transporte</label>
+            <input type="number" step="0.01" class="form-control" id="valeTransporte" name="valeTransporte" placeholder="Digite o valor do vale transporte" required>
+        </div>
+        <div class="mb-3">
+            <label for="preRequisitos" class="form-label">Pré-Requisitos</label>
+            <textarea class="form-control" id="preRequisitos" name="preRequisitos" rows="4" placeholder="Digite os pré-requisitos" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="habilidadesNecessaria" class="form-label">Habilidades Necessárias</label>
+            <textarea class="form-control" id="habilidadesNecessaria" name="habilidadesNecessaria" rows="4" placeholder="Digite as habilidades necessárias" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="habilidadesDesejavel" class="form-label">Habilidades Desejáveis</label>
+            <textarea class="form-control" id="habilidadesDesejavel" name="habilidadesDesejavel" rows="4" placeholder="Digite as habilidades desejáveis" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Criar Oferta</button>
+    </form>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

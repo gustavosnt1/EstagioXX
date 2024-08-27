@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Coordenador</title>
+  <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+  <h2>Dashboard Coordenador</h2>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Atividade Principal</th>
+      <th>Valor Pago</th>
+      <th>Ação</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="oferta : ${ofertas}">
+      <td th:text="${oferta.idOfertaEstagio}"></td>
+      <td th:text="${oferta.atividadePrincipal}"></td>
+      <td th:text="${oferta.valorPago}"></td>
+      <td>
+        <a th:href="@{/coordenadores/oferta/{id}/candidatos(id=${oferta.idOfertaEstagio})}" class="btn btn-info">Ver Candidatos</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

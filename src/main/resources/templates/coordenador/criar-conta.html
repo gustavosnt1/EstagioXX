@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta - Aluno</title>
+    <!-- Bootstrap CSS -->
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container mt-5">
+    <h2 class="text-center">Criar Conta - Aluno</h2>
+    <form th:action="@{/coordenadores/salvar}" method="post">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" required>
+        </div>
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Escolha um username" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Senha</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Digite uma senha" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Criar Conta</button>
+    </form>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript"></script>
+</body>
+
+</html>

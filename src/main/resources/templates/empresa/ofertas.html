@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ofertas de Estágio</title>
+  <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container mt-5">
+  <h2>Ofertas de Estágio Criadas</h2>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Atividade Principal</th>
+      <th>CH Semanal</th>
+      <th>Valor Pago</th>
+      <th>Vale Transporte</th>
+      <th>Pré-Requisitos</th>
+      <th>Habilidades Necessárias</th>
+      <th>Habilidades Desejáveis</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="oferta : ${ofertas}">
+      <td th:text="${oferta.atividadePrincipal}">Atividade Principal</td>
+      <td th:text="${oferta.chSemanal}">CH Semanal</td>
+      <td th:text="${oferta.valorPago}">Valor Pago</td>
+      <td th:text="${oferta.valeTransporte}">Vale Transporte</td>
+      <td th:text="${oferta.preRequisitos}">Pré-Requisitos</td>
+      <td th:text="${oferta.habilidadesNecessaria}">Habilidades Necessárias</td>
+      <td th:text="${oferta.habilidadesDesejavel}">Habilidades Desejáveis</td>
+    </tr>
+    </tbody>
+  </table>
+  <a th:href="@{/empresas/dashboard}" class="btn btn-primary">Voltar ao Dashboard</a>
+</div>
+</body>
+</html>

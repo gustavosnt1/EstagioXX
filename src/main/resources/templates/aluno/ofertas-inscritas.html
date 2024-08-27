@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ofertas Inscritas</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Ofertas Inscritas</a>
+</nav>
+<div class="container mt-5">
+    <h2>Ofertas Inscritas</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Oferta</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="candidatura : ${candidaturas}">
+            <td th:text="${candidatura.ofertaEstagio.idOfertaEstagio}"></td>
+            <td th:text="${candidatura.ofertaEstagio.atividadePrincipal}"></td>
+            <td th:text="${candidatura.status}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

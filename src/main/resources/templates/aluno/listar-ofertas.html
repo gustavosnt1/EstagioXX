@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ofertas de Estágio</title>
+  <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Ofertas de Estágio</a>
+</nav>
+<div class="container mt-5">
+  <h2>Ofertas de Estágio</h2>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Atividade Principal</th>
+      <th>Valor Pago</th>
+      <th>Ação</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="oferta : ${ofertas}">
+      <td th:text="${oferta.idOfertaEstagio}"></td>
+      <td th:text="${oferta.atividadePrincipal}"></td>
+      <td th:text="${oferta.valorPago}"></td>
+      <td>
+        <a class="btn btn-primary" th:href="@{/alunos/candidatar(ofertaId=${oferta.idOfertaEstagio})}">Candidatar</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

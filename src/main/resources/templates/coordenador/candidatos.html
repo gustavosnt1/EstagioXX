@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Candidatos</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <h2>Candidatos para a Oferta</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID Aluno</th>
+            <th>Nome Aluno</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="candidatura : ${candidaturas}">
+            <td th:text="${candidatura.aluno.idAluno}"></td>
+            <td th:text="${candidatura.aluno.nome}"></td>
+            <td th:text="${candidatura.status}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
