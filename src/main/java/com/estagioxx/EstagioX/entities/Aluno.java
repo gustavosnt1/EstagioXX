@@ -20,15 +20,19 @@ public class Aluno implements Serializable {
     private String username;
     @Column(name = "passwordAluno",nullable = false)
     private String password;
+    @ElementCollection(fetch = FetchType.LAZY)
+    @Column(name = "habilidades")
+    private Set<String> habilidades;  // Habilidades predefinidas selecionadas pelo aluno
 
     public Aluno() {
 
     }
 
-    public Aluno(Long idAluno, String nome, String username, String password) {
+    public Aluno(Long idAluno, String nome, String username, Set<String> habilidades, String password) {
         this.idAluno = idAluno;
         this.nome = nome;
         this.username = username;
+        this.habilidades = habilidades;
         this.password = password;
     }
 
@@ -64,7 +68,13 @@ public class Aluno implements Serializable {
         this.password = password;
     }
 
+    public Set<String> getHabilidades() {
+        return habilidades;
+    }
 
+    public void setHabilidades(Set<String> habilidades) {
+        this.habilidades = habilidades;
+    }
 
     @Override
     public boolean equals(Object o) {

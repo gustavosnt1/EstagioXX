@@ -28,6 +28,13 @@
       <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Digite uma senha" required>
     </div>
 
+    <div class="mb-3">
+      <label for="habilidades" class="form-label">Habilidades</label>
+      <select id="habilidades" name="habilidades" class="form-select" multiple="multiple">
+        <option th:each="habilidade : ${habilidades}" th:value="${habilidade}" th:text="${habilidade}">Habilidade</option>
+      </select>
+    </div>
+
     <button type="submit" class="btn btn-primary">Criar Conta</button>
   </form>
 </div>

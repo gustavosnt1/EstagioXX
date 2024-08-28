@@ -40,6 +40,8 @@ public class AlunoController {
     @GetMapping("/cadastrar")
     public ModelAndView cadastrar() {
         ModelAndView mav = new ModelAndView("aluno/criar-conta");
+        List<String> habilidadesPredefinidas = Arrays.asList("Programação Python", "Design em CSS", "Especialista em UX", "Programador de Testes");
+        mav.addObject("habilidades", habilidadesPredefinidas);
         mav.addObject("aluno", new Aluno());
         return mav;
     }
