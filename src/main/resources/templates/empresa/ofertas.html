@@ -7,8 +7,28 @@
   <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Sistema de Gerenciamento</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/empresas/criar-oferta}">Criar Oferta de Estágio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/empresas/listar-ofertas}">Listar Ofertas</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
 <div class="container mt-5">
-  <button type="button" class="btn btn-secondary" onclick="window.history.back()">Voltar</button>
   <h2>Ofertas de Estágio Criadas</h2>
   <table class="table table-striped">
     <thead>
@@ -31,6 +51,11 @@
       <td th:text="${oferta.preRequisitos}">Pré-Requisitos</td>
       <td th:text="${oferta.habilidadesNecessaria}">Habilidades Necessárias</td>
       <td th:text="${oferta.habilidadesDesejavel}">Habilidades Desejáveis</td>
+      <td>
+        <form th:action="@{/empresas/deletar-oferta/{id}(id=${oferta.idOfertaEstagio})}" method="post" onsubmit="return confirm('Você tem certeza que deseja excluir esta oferta?');">
+          <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
+        </form>
+      </td>
     </tr>
     </tbody>
   </table>

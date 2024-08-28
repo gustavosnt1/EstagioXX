@@ -68,4 +68,21 @@ public class OfertaEstagioService {
                                 String.valueOf(o.getValorPago()).contains(query)))
                 .collect(Collectors.toList());
     }
+
+    public void delete(Long idOfertaEstagio) {
+        // Encontra a oferta de estágio
+        OfertaEstagio oferta = ofertaEstagioRepository.findById(idOfertaEstagio)
+                .orElseThrow(() -> new IllegalArgumentException("Oferta não encontrada"));
+
+        // Remove todas as candidaturas associadas à oferta
+        List<Candidatura> candidaturas = candidaturaService.listarCandidaturasPorOferta(idOfertaEstagio);
+        for (Candidatura candidatura : candidaturas) {
+            candidaturaService.delete(candidatura.getIdCandidatura());
+        }
+
+        // Remove a oferta de estágio
+        ofertaEstagioRepository.delete(oferta);
+    }
 }
+
+

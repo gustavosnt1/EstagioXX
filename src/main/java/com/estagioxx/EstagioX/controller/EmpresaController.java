@@ -98,6 +98,12 @@ public class EmpresaController {
         mav.addObject("ofertas", ofertas);
         return mav;
     }
+
+    @PostMapping("/deletar-oferta/{id}")
+    public ModelAndView deletarOferta(@PathVariable Long id) {
+        ofertaEstagioService.delete(id);
+        return new ModelAndView("redirect:/empresas/listar-ofertas");  // Redireciona para a lista de ofertas após deletar
+    }
 }
 
 

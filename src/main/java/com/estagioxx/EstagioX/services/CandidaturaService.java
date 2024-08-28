@@ -42,4 +42,8 @@ public class CandidaturaService {
     public OfertaEstagio findOfertaById(Long ofertaId) {
         return ofertaEstagioRepository.findById(ofertaId).orElse(null);
     }
+
+    public void delete(Long idCandidatura) {
+        candidaturaRepository.deleteById(idCandidatura);
+    }
 }
