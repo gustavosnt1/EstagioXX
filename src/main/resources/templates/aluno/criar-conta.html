@@ -14,19 +14,20 @@
 <div class="container mt-5">
   <button type="button" class="btn btn-secondary" onclick="window.history.back()">Voltar</button>
   <h2 class="text-center">Criar Conta - Aluno</h2>
-  <form th:action="@{/alunos/salvar}" method="post">
+  <form th:action="@{/alunos/salvar}" th:object="${aluno}" method="post">
     <div class="mb-3">
       <label for="nome" class="form-label">Nome</label>
-      <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" required>
+      <input type="text" class="form-control" id="nome" th:field="*{nome}" placeholder="Digite seu nome" required>
     </div>
     <div class="mb-3">
       <label for="username" class="form-label">Username</label>
-      <input type="text" class="form-control" id="username" name="username" placeholder="Escolha um username" required>
+      <input type="text" class="form-control" id="username" th:field="*{username}" placeholder="Escolha um username" required>
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Senha</label>
-      <input type="password" class="form-control" id="password" name="password" placeholder="Digite uma senha" required>
+      <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Digite uma senha" required>
     </div>
+
     <button type="submit" class="btn btn-primary">Criar Conta</button>
   </form>
 </div>

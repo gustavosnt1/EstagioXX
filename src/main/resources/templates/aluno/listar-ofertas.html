@@ -13,20 +13,35 @@
 </nav>
 <div class="container mt-5">
   <h2>Ofertas de Estágio</h2>
+
+  <form th:action="@{/alunos/ofertas}" method="get">
+    <div class="mb-3">
+      <input type="text" class="form-control" name="query" placeholder="Pesquisar por atividade principal, valor pago, etc." th:value="${query}" />
+    </div>
+    <button type="submit" class="btn btn-primary">Pesquisar</button>
+  </form>
+
   <table class="table">
     <thead>
     <tr>
-      <th>ID</th>
       <th>Atividade Principal</th>
+      <th>Pre-Requisitos</th>
+      <th>Carga Horaria Semanal</th>
       <th>Valor Pago</th>
-      <th>Ação</th>
+      <th>Vale Transporte</th>
+      <th>Habilidades Desejavel</th>
+      <th>Habilidades Necessarias</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="oferta : ${ofertas}">
-      <td th:text="${oferta.idOfertaEstagio}"></td>
       <td th:text="${oferta.atividadePrincipal}"></td>
+      <td th:text="${oferta.preRequisitos}"></td>
+      <td th:text="${oferta.chSemanal}"></td>
       <td th:text="${oferta.valorPago}"></td>
+      <td th:text="${oferta.valeTransporte}"></td>
+      <td th:text="${oferta.habilidadesDesejavel}"></td>
+      <td th:text="${oferta.habilidadesNecessaria}"></td>
       <td>
         <a class="btn btn-primary" th:href="@{/alunos/candidatar(ofertaId=${oferta.idOfertaEstagio})}">Candidatar</a>
       </td>

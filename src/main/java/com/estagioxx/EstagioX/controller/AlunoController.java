@@ -10,10 +10,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,7 +39,7 @@ public class AlunoController {
 
     @GetMapping("/cadastrar")
     public ModelAndView cadastrar() {
-        ModelAndView mav = new ModelAndView("aluno/criar-conta");  // Nome da página Thymeleaf criar-conta.html
+        ModelAndView mav = new ModelAndView("aluno/criar-conta");
         mav.addObject("aluno", new Aluno());
         return mav;
     }
@@ -82,7 +82,7 @@ public class AlunoController {
 
 
     @GetMapping("/ofertas")
-    public ModelAndView listarOfertas() {
+    public ModelAndView listarOfertas(@RequestParam(value = "query", required = false) String query) {
         Aluno aluno = (Aluno) httpSession.getAttribute("aluno");
 
         if (aluno == null) {
@@ -90,21 +90,28 @@ public class AlunoController {
         }
 
         // Obtém todas as ofertas
-        List<OfertaEstagio> todasOfertas = ofertaEstagioService.findAll();
-        // Obtém as candidaturas do aluno
-        List<Candidatura> candidaturas = candidaturaService.listarCandidaturasPorAluno(aluno.getIdAluno());
+        List<OfertaEstagio> ofertasDisponiveis;
 
-        // Filtra ofertas que já foram candidatas
-        Set<Long> ofertasCandidatas = candidaturas.stream()
-                .map(c -> c.getOfertaEstagio().getIdOfertaEstagio())
-                .collect(Collectors.toSet());
+        // Se houver um termo de pesquisa
+        if (query != null && !query.isEmpty()) {
+            ofertasDisponiveis = ofertaEstagioService.search(query, aluno.getIdAluno());
+        } else {
+            // Obtém as candidaturas do aluno
+            List<Candidatura> candidaturas = candidaturaService.listarCandidaturasPorAluno(aluno.getIdAluno());
 
-        List<OfertaEstagio> ofertasDisponiveis = todasOfertas.stream()
-                .filter(o -> !ofertasCandidatas.contains(o.getIdOfertaEstagio()))
-                .collect(Collectors.toList());
+            // Filtra ofertas que já foram candidatas
+            Set<Long> ofertasCandidatas = candidaturas.stream()
+                    .map(c -> c.getOfertaEstagio().getIdOfertaEstagio())
+                    .collect(Collectors.toSet());
+
+            ofertasDisponiveis = ofertaEstagioService.findAll().stream()
+                    .filter(o -> !ofertasCandidatas.contains(o.getIdOfertaEstagio()))
+                    .collect(Collectors.toList());
+        }
 
         ModelAndView mav = new ModelAndView("aluno/listar-ofertas");
         mav.addObject("ofertas", ofertasDisponiveis);
+        mav.addObject("query", query); // Adiciona o termo de pesquisa ao modelo para manter o valor no campo de pesquisa
         return mav;
     }
 

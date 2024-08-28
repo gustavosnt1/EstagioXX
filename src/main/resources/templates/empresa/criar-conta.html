@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Criar Conta - Aluno</title>
+  <title>Criar Conta - Empresa</title>
   <!-- Bootstrap CSS -->
   <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -13,35 +13,45 @@
 <body>
 <div class="container mt-5">
   <button type="button" class="btn btn-secondary" onclick="window.history.back()">Voltar</button>
-  <h2 class="text-center">Criar Conta - Aluno</h2>
-  <form th:action="@{/empresas/salvar}" method="post">
+  <h2 class="text-center">Criar Conta - Empresa</h2>
+  <form th:action="@{/empresas/salvar}" th:object="${empresa}" method="post">
     <div class="mb-3">
       <label for="nome" class="form-label">Nome</label>
-      <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome." required>
+      <input type="text" class="form-control" id="nome" th:field="*{nome}" placeholder="Digite seu nome." required>
     </div>
     <div class="mb-3">
       <label for="cnpj" class="form-label">CNPJ</label>
-      <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="Digite seu CNPJ." required>
+      <input type="text" class="form-control" id="cnpj" th:field="*{cnpj}" placeholder="Digite seu CNPJ." required>
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu e-mail." required>
+      <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Digite seu e-mail." required>
     </div>
     <div class="mb-3">
       <label for="telefone" class="form-label">Telefone</label>
-      <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Digite seu telefone." required>
+      <input type="text" class="form-control" id="telefone" th:field="*{telefone}" placeholder="Digite seu telefone." required>
     </div>
     <div class="mb-3">
       <label for="endereco" class="form-label">Endereço</label>
-      <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Digite seu endereço." required>
+      <input type="text" class="form-control" id="endereco" th:field="*{endereco}" placeholder="Digite seu endereço." required>
     </div>
     <div class="mb-3">
       <label for="pessoaContato" class="form-label">Pessoa Contato</label>
-      <input type="text" class="form-control" id="pessoaContato" name="pessoaContato" placeholder="Digite pessoa contato." required>
+      <input type="text" class="form-control" id="pessoaContato" th:field="*{pessoaContato}" placeholder="Digite pessoa contato." required>
     </div>
     <div class="mb-3">
       <label for="atividadePrincipal" class="form-label">Atividade principal</label>
-      <input type="text" class="form-control" id="atividadePrincipal" name="atividadePrincipal" placeholder="Digite atividade principal da empresa." required>
+      <input type="text" class="form-control" id="atividadePrincipal" th:field="*{atividadePrincipal}" placeholder="Digite atividade principal da empresa." required>
+    </div>
+
+    <div class="mb-3">
+      <label for="urlEmpresa" class="form-label">URL Empresa</label>
+      <input type="url" class="form-control" id="urlEmpresa" th:field="*{urlEmpresa}" placeholder="Digite a url da empresa." required>
+    </div>
+
+    <div class="mb-3">
+      <label for="pdfEmpresa">Documento de Comprovação (PDF)</label>
+      <input type="file" class="form-control" id="pdfEmpresa" th:field="*{pdfEmpresa}" accept=".pdf" required>
     </div>
 
     <button type="submit" class="btn btn-primary">Criar Conta</button>

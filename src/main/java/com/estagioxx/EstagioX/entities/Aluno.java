@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_alunos")
@@ -19,8 +20,6 @@ public class Aluno implements Serializable {
     private String username;
     @Column(name = "passwordAluno",nullable = false)
     private String password;
-
-    // TODO hab e competicias
 
     public Aluno() {
 
@@ -64,6 +63,8 @@ public class Aluno implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 
     @Override
     public boolean equals(Object o) {
