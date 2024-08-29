@@ -31,17 +31,6 @@ public class CandidaturaService {
         return candidaturaRepository.findByOfertaEstagio_IdOfertaEstagio(ofertaId);
     }
 
-    public Candidatura findById(Long id) {
-        return candidaturaRepository.findById(id).orElse(null);
-    }
-
-    public List<OfertaEstagio> listarOfertas() {
-        return ofertaEstagioRepository.findAll();
-    }
-
-    public OfertaEstagio findOfertaById(Long ofertaId) {
-        return ofertaEstagioRepository.findById(ofertaId).orElse(null);
-    }
 
     public void delete(Long idCandidatura) {
         candidaturaRepository.deleteById(idCandidatura);

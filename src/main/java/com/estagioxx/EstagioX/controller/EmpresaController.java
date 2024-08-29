@@ -1,15 +1,13 @@
 package com.estagioxx.EstagioX.controller;
 
-import com.estagioxx.EstagioX.entities.Aluno;
+
 import com.estagioxx.EstagioX.entities.Empresa;
 import com.estagioxx.EstagioX.entities.OfertaEstagio;
-import com.estagioxx.EstagioX.services.AlunoService;
 import com.estagioxx.EstagioX.services.EmpresaService;
 import com.estagioxx.EstagioX.services.OfertaEstagioService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,7 +28,7 @@ public class EmpresaController {
 
     @GetMapping("/cadastrar")
     public ModelAndView cadastrar() {
-        ModelAndView mav = new ModelAndView("empresa/criar-conta");  // Nome da página Thymeleaf criar-conta.html
+        ModelAndView mav = new ModelAndView("empresa/criar-conta");
         mav.addObject("empresa", new Empresa());
         return mav;
     }
@@ -38,12 +36,12 @@ public class EmpresaController {
     @PostMapping("/salvar")
     public ModelAndView salvar(@ModelAttribute Empresa empresa) {
         empresaService.save(empresa);
-        return new ModelAndView("redirect:/empresas/login");  // Redireciona para a página de login após salvar
+        return new ModelAndView("redirect:/empresas/login");
     }
 
     @GetMapping("/login")
     public ModelAndView login() {
-        return new ModelAndView("empresa/login");  // Nome da página Thymeleaf login.html
+        return new ModelAndView("empresa/login");
     }
 
     @PostMapping("/autenticar")
@@ -51,12 +49,12 @@ public class EmpresaController {
         boolean isAuthenticated = empresaService.authenticate(empresa.getEmail());
 
         if (isAuthenticated) {
-            // Opcional: Carregar informações adicionais da empresa, se necessário
+
             Empresa empresaAutenticado = empresaService.findByEmail(empresa.getEmail());
 
-            // Armazenar a empresa na sessão
+
             httpSession.setAttribute("empresa", empresaAutenticado);
-            return new ModelAndView("redirect:/empresas/dashboard");  // Redireciona para a página inicial se o login for bem-sucedido
+            return new ModelAndView("redirect:/empresas/dashboard");
         } else {
             ModelAndView mav = new ModelAndView("empresa/login");
             mav.addObject("error", "Email inválido");
@@ -66,13 +64,13 @@ public class EmpresaController {
 
     @GetMapping("/dashboard")
     public ModelAndView dashboard() {
-        // Opcional: Carregar dados necessários para o dashboard
-        return new ModelAndView("empresa/dashboard");  // Nome da página Thymeleaf dashboard.html
+
+        return new ModelAndView("empresa/dashboard");
     }
 
     @GetMapping("/criar-oferta")
     public ModelAndView criarOferta() {
-        ModelAndView mav = new ModelAndView("empresa/criar-oferta");  // Nome da página Thymeleaf criar-oferta.html
+        ModelAndView mav = new ModelAndView("empresa/criar-oferta");
         mav.addObject("ofertaEstagio", new OfertaEstagio());
         return mav;
     }
@@ -84,17 +82,17 @@ public class EmpresaController {
             ofertaEstagio.setEmpresas(empresa);
             ofertaEstagioService.save(ofertaEstagio);
         }
-        return new ModelAndView("redirect:/empresas/dashboard");  // Redireciona para o dashboard após salvar a oferta
+        return new ModelAndView("redirect:/empresas/dashboard");
     }
 
     @GetMapping("/listar-ofertas")
     public ModelAndView listarOfertas() {
         Empresa empresa = (Empresa) httpSession.getAttribute("empresa");
         if (empresa == null) {
-            return new ModelAndView("redirect:/empresas/login");  // Redireciona para o login se a empresa não estiver autenticada
+            return new ModelAndView("redirect:/empresas/login");
         }
         List<OfertaEstagio> ofertas = ofertaEstagioService.findByEmpresa(empresa);
-        ModelAndView mav = new ModelAndView("empresa/ofertas");  // Nome da página Thymeleaf ofertas.html
+        ModelAndView mav = new ModelAndView("empresa/ofertas");
         mav.addObject("ofertas", ofertas);
         return mav;
     }
@@ -102,7 +100,7 @@ public class EmpresaController {
     @PostMapping("/deletar-oferta/{id}")
     public ModelAndView deletarOferta(@PathVariable Long id) {
         ofertaEstagioService.delete(id);
-        return new ModelAndView("redirect:/empresas/listar-ofertas");  // Redireciona para a lista de ofertas após deletar
+        return new ModelAndView("redirect:/empresas/listar-ofertas");
     }
 }
 

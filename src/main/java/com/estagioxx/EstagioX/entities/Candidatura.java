@@ -13,20 +13,18 @@ public class Candidatura implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idCandidatura")
     private Long idCandidatura;
-
     @ManyToOne
-    @JoinColumn(name = "idAluno") // Nome da coluna na tabela tb_candidaturas que referencia Aluno
+    @JoinColumn(name = "idAluno")
     private Aluno aluno;
-
     @ManyToOne
-    @JoinColumn(name = "idOfertaEstagio") // Nome da coluna na tabela tb_candidaturas que referencia OfertaEstagio
+    @JoinColumn(name = "idOfertaEstagio")
     private OfertaEstagio ofertaEstagio;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private StatusCandidatura status;
 
-    // Getters e Setters
+
     public Long getIdCandidatura() {
         return idCandidatura;
     }

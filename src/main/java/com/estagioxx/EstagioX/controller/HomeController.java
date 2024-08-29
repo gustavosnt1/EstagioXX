@@ -9,7 +9,7 @@ public class HomeController {
 
     @GetMapping("/home")
     public ModelAndView home() {
-        return new ModelAndView("home");  // Nome da página Thymeleaf home.html
+        return new ModelAndView("home");
     }
 
 }

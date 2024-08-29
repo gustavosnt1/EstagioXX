@@ -31,11 +31,11 @@ public class AlunoService {
         return alunoRepository.save(aluno);
     }
 
-    // Método de autenticação
+
     public boolean authenticate(String username, String password) {
         Optional<Aluno> alunoOptional = alunoRepository.findByUsername(username);
 
-        // Verifica se o username existe e se a senha está correta
+
         if (alunoOptional.isPresent()) {
             Aluno aluno = alunoOptional.get();
             return aluno.getPassword().equals(password);

@@ -1,6 +1,6 @@
 package com.estagioxx.EstagioX.controller;
 
-import com.estagioxx.EstagioX.entities.Aluno;
+
 import com.estagioxx.EstagioX.entities.Candidatura;
 import com.estagioxx.EstagioX.entities.Coordenador;
 import com.estagioxx.EstagioX.entities.OfertaEstagio;
@@ -8,7 +8,6 @@ import com.estagioxx.EstagioX.services.CoordenadorService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,7 +25,7 @@ public class CoordenadorController {
 
     @GetMapping("/cadastrar")
     public ModelAndView cadastrar() {
-        ModelAndView mav = new ModelAndView("coordenador/criar-conta");  // Nome da página Thymeleaf criar-conta.html
+        ModelAndView mav = new ModelAndView("coordenador/criar-conta");
         mav.addObject("coordenador", new Coordenador());
         return mav;
     }
@@ -34,12 +33,12 @@ public class CoordenadorController {
     @PostMapping("/salvar")
     public ModelAndView salvar(@ModelAttribute Coordenador coordenador) {
         coordenadorService.save(coordenador);
-        return new ModelAndView("redirect:/coordenadores/login");  // Redireciona para a página de login após salvar
+        return new ModelAndView("redirect:/coordenadores/login");
     }
 
     @GetMapping("/login")
     public ModelAndView login() {
-        return new ModelAndView("coordenador/login");  // Nome da página Thymeleaf login.html
+        return new ModelAndView("coordenador/login");
     }
 
     @PostMapping("/autenticar")

@@ -30,7 +30,7 @@ public class OfertaEstagioController {
         Long idAluno = (Long) session.getAttribute("idAluno");
         model.addAttribute("idAluno", idAluno);
         model.addAttribute("ofertas", ofertaEstagioService.findAll());
-        return "ofertaestagio/lista"; // Nome do template para listar ofertas
+        return "ofertaestagio/lista";
     }
 
 
@@ -41,18 +41,6 @@ public class OfertaEstagioController {
         return "ofertaestagio/cadastro";
     }
 
-/*    @PostMapping("/salvar")
-    public String salvar(@ModelAttribute OfertaEstagio ofertaEstagio, @RequestParam("idEmpresa") Long idEmpresa) {
-        ofertaEstagioService.save(ofertaEstagio, idEmpresa);
-        return "redirect:/ofertaestagio/lista";
-    }*/
-
-    /*@GetMapping("/listar")
-    public String listar(Model model) {
-        model.addAttribute("ofertas", ofertaEstagioService.findAll());
-        return "ofertaestagio/lista";
-    }*/
-
     @PostMapping("/candidatar")
     public String candidatar(@RequestParam Long idOfertaEstagio, HttpSession session) {
         Long idAluno = (Long) session.getAttribute("idAluno");
@@ -62,10 +50,10 @@ public class OfertaEstagioController {
         Candidatura candidatura = new Candidatura();
         candidatura.setAluno(aluno);
         candidatura.setOfertaEstagio(ofertaEstagio);
-        candidatura.setStatus(Candidatura.StatusCandidatura.PENDENTE); // ou o status inicial desejado
+        candidatura.setStatus(Candidatura.StatusCandidatura.PENDENTE);
 
         candidaturaService.save(candidatura);
 
-        return "redirect:/ofertas"; // Redireciona para a lista de ofertas ou outra página apropriada
+        return "redirect:/ofertas";
     }
 }

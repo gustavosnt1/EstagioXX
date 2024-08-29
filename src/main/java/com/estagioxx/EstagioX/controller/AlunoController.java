@@ -6,7 +6,6 @@ import com.estagioxx.EstagioX.entities.OfertaEstagio;
 import com.estagioxx.EstagioX.services.AlunoService;
 import com.estagioxx.EstagioX.services.CandidaturaService;
 import com.estagioxx.EstagioX.services.OfertaEstagioService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,9 +28,6 @@ public class AlunoController {
     private HttpSession httpSession;
 
     @Autowired
-    private HttpServletRequest request;
-
-    @Autowired
     private CandidaturaService candidaturaService;
 
     @Autowired
@@ -49,12 +45,12 @@ public class AlunoController {
     @PostMapping("/salvar")
     public ModelAndView salvar(@ModelAttribute Aluno aluno) {
         alunoService.save(aluno);
-        return new ModelAndView("redirect:/alunos/login");  // Redireciona para a página de login após salvar
+        return new ModelAndView("redirect:/alunos/login");
     }
 
     @GetMapping("/login")
     public ModelAndView login() {
-        return new ModelAndView("aluno/login");  // Nome da página Thymeleaf login.html
+        return new ModelAndView("aluno/login");
     }
 
     @PostMapping("/autenticar")
@@ -63,13 +59,13 @@ public class AlunoController {
 
 
         if (isAuthenticated) {
-            // Opcional: Carregar informações adicionais do aluno, se necessário
+
             Aluno alunoAutenticado = alunoService.findByUsername(aluno.getUsername());
             System.out.println("Aluno autenticado: " + alunoAutenticado);
 
             // Armazenar o aluno na sessão
             httpSession.setAttribute("aluno", alunoAutenticado);
-            return new ModelAndView("redirect:/alunos/dashboard");  // Redireciona para a página inicial se o login for bem-sucedido
+            return new ModelAndView("redirect:/alunos/dashboard");
         } else {
             ModelAndView mav = new ModelAndView("aluno/login");
             mav.addObject("error", "Usuário ou senha inválidos");
@@ -79,7 +75,7 @@ public class AlunoController {
 
     @GetMapping("/dashboard")
     public ModelAndView dashboard() {
-        return new ModelAndView("aluno/dashboard");  // Nome da página Thymeleaf dashboard.html
+        return new ModelAndView("aluno/dashboard");
     }
 
 
@@ -91,17 +87,14 @@ public class AlunoController {
             return new ModelAndView("redirect:/alunos/login");
         }
 
-        // Obtém todas as ofertas
         List<OfertaEstagio> ofertasDisponiveis;
 
-        // Se houver um termo de pesquisa
         if (query != null && !query.isEmpty()) {
             ofertasDisponiveis = ofertaEstagioService.search(query, aluno.getIdAluno());
         } else {
-            // Obtém as candidaturas do aluno
+
             List<Candidatura> candidaturas = candidaturaService.listarCandidaturasPorAluno(aluno.getIdAluno());
 
-            // Filtra ofertas que já foram candidatas
             Set<Long> ofertasCandidatas = candidaturas.stream()
                     .map(c -> c.getOfertaEstagio().getIdOfertaEstagio())
                     .collect(Collectors.toSet());
@@ -113,7 +106,7 @@ public class AlunoController {
 
         ModelAndView mav = new ModelAndView("aluno/listar-ofertas");
         mav.addObject("ofertas", ofertasDisponiveis);
-        mav.addObject("query", query); // Adiciona o termo de pesquisa ao modelo para manter o valor no campo de pesquisa
+        mav.addObject("query", query);
         return mav;
     }
 
@@ -127,7 +120,7 @@ public class AlunoController {
 
         OfertaEstagio ofertaEstagio = ofertaEstagioService.findById(ofertaId);
         if (ofertaEstagio == null) {
-            return new ModelAndView("redirect:/alunos/ofertas"); // Redireciona se a oferta não for encontrada
+            return new ModelAndView("redirect:/alunos/ofertas");
         }
 
         Candidatura candidatura = new Candidatura();

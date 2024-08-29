@@ -22,7 +22,7 @@ public class Aluno implements Serializable {
     private String password;
     @ElementCollection(fetch = FetchType.LAZY)
     @Column(name = "habilidades")
-    private Set<String> habilidades;  // Habilidades predefinidas selecionadas pelo aluno
+    private Set<String> habilidades;
 
     public Aluno() {
 

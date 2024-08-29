@@ -35,13 +35,13 @@ public class CoordenadorService {
         return null;
     }
 
-    // Listar todas as ofertas de estágio
+
     public List<OfertaEstagio> listarTodasOfertas() {
-        return ofertaEstagioRepository.findAll(); // Retorna todas as ofertas de estágio
+        return ofertaEstagioRepository.findAll(); //
     }
 
-    // Listar todos os candidatos a uma oferta específica
+
     public List<Candidatura> listarCandidatosPorOferta(Long ofertaId) {
-        return candidaturaRepository.findByOfertaEstagio_IdOfertaEstagio(ofertaId); // Retorna todas as candidaturas para a oferta específica
+        return candidaturaRepository.findByOfertaEstagio_IdOfertaEstagio(ofertaId);
     }
 }

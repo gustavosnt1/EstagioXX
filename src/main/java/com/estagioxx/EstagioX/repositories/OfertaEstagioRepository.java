@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface OfertaEstagioRepository extends JpaRepository<OfertaEstagio, Long> {
     List<OfertaEstagio> findByEmpresas(Empresa empresa);
-    List<OfertaEstagio> findByAtividadePrincipal(String atividadePrincipal);
 }

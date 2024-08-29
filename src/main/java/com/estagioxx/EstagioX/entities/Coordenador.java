@@ -13,17 +13,14 @@ public class Coordenador implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idCoordenador")
     private Long idCoordenador;
-
     @Column(name = "nomeCoordenador", nullable = false)
     private String nome;
-
     @Column(name = "usernameCoordenador", nullable = false)
     private String username;
-
     @Column(name = "passwordCoordenador", nullable = false)
     private String password;
 
-    // Construtores, getters e setters
+
     public Coordenador() {}
 
     public Coordenador(Long idCoordenador, String nome, String username, String password) {

@@ -3,10 +3,9 @@ package com.estagioxx.EstagioX.services;
 import com.estagioxx.EstagioX.entities.Candidatura;
 import com.estagioxx.EstagioX.entities.Empresa;
 import com.estagioxx.EstagioX.entities.OfertaEstagio;
-import com.estagioxx.EstagioX.repositories.EmpresaRepository;
+
 import com.estagioxx.EstagioX.repositories.OfertaEstagioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,9 +19,6 @@ public class OfertaEstagioService {
     @Autowired
     private OfertaEstagioRepository ofertaEstagioRepository;
 
-    @Lazy
-    @Autowired
-    private EmpresaService empresaService;
 
     @Autowired
     private CandidaturaService candidaturaService;
@@ -50,18 +46,14 @@ public class OfertaEstagioService {
 
 
     public List<OfertaEstagio> search(String query, Long alunoId) {
-        // Obtém todas as ofertas
         List<OfertaEstagio> todasOfertas = ofertaEstagioRepository.findAll();
 
-        // Obtém as candidaturas do aluno
         List<Candidatura> candidaturas = candidaturaService.listarCandidaturasPorAluno(alunoId);
 
-        // Filtra ofertas que já foram candidatas
         Set<Long> ofertasCandidatas = candidaturas.stream()
                 .map(c -> c.getOfertaEstagio().getIdOfertaEstagio())
                 .collect(Collectors.toSet());
 
-        // Filtra ofertas disponíveis com base no termo de pesquisa
         return todasOfertas.stream()
                 .filter(o -> !ofertasCandidatas.contains(o.getIdOfertaEstagio()) &&
                         (o.getAtividadePrincipal().toLowerCase().contains(query.toLowerCase()) ||
@@ -70,17 +62,14 @@ public class OfertaEstagioService {
     }
 
     public void delete(Long idOfertaEstagio) {
-        // Encontra a oferta de estágio
         OfertaEstagio oferta = ofertaEstagioRepository.findById(idOfertaEstagio)
                 .orElseThrow(() -> new IllegalArgumentException("Oferta não encontrada"));
 
-        // Remove todas as candidaturas associadas à oferta
         List<Candidatura> candidaturas = candidaturaService.listarCandidaturasPorOferta(idOfertaEstagio);
         for (Candidatura candidatura : candidaturas) {
             candidaturaService.delete(candidatura.getIdCandidatura());
         }
 
-        // Remove a oferta de estágio
         ofertaEstagioRepository.delete(oferta);
     }
 }
