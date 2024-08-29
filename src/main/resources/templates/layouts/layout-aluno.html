@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:insert="~{::title}">Dashboard</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Inclusão da navegação -->
+<div th:replace="~{fragments/navbar-aluno :: navbar}"></div>
+
+<!-- Conteúdo Principal -->
+<div class="container mt-5">
+    <div th:insert="~{::content}"></div>
+</div>
+
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
