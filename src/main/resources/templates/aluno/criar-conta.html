@@ -5,9 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Criar Conta - Aluno</title>
-  <!-- Bootstrap CSS -->
-  <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -19,12 +17,24 @@
       <input type="text" class="form-control" id="nome" th:field="*{nome}" placeholder="Digite seu nome" required>
     </div>
     <div class="mb-3">
+      <label for="sobrenome" class="form-label">Sobrenome</label>
+      <input type="text" class="form-control" id="sobrenome" th:field="*{sobrenome}" placeholder="Digite uma senha" required>
+    </div>
+    <div class="mb-3">
       <label for="username" class="form-label">Username</label>
       <input type="text" class="form-control" id="username" th:field="*{username}" placeholder="Escolha um username" required>
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Senha</label>
       <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Digite uma senha" required>
+    </div>
+    <div class="mb-3">
+      <label for="faculdade" class="form-label">Faculdade</label>
+      <input type="text" class="form-control" id="faculdade" th:field="*{faculdade}" placeholder="Digite uma senha" required>
+    </div>
+    <div class="mb-3">
+      <label for="telefone" class="form-label">Telefone</label>
+      <input type="text" class="form-control" id="telefone" th:field="*{telefone}" placeholder="Digite uma senha" required>
     </div>
 
     <div class="mb-3">
@@ -38,9 +48,7 @@
   </form>
 </div>
 
-<!-- Bootstrap JS -->
-<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

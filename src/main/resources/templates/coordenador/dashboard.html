@@ -3,26 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <title>Dashboard Coordenador</title>
-  <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
-  <button type="button" class="btn btn-secondary" onclick="window.history.back()">Voltar</button>
   <h2>Dashboard Coordenador</h2>
   <table class="table">
     <thead>
     <tr>
-      <th>ID</th>
       <th>Atividade Principal</th>
       <th>Valor Pago</th>
-      <th>Ação</th>
+      <th>Empresa</th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="oferta : ${ofertas}">
-      <td th:text="${oferta.idOfertaEstagio}"></td>
       <td th:text="${oferta.atividadePrincipal}"></td>
       <td th:text="${oferta.valorPago}"></td>
+      <td th:text="${oferta.empresas.getNome()}"></td>
       <td>
         <a th:href="@{/coordenadores/oferta/{id}/candidatos(id=${oferta.idOfertaEstagio})}" class="btn btn-info">Ver Candidatos</a>
       </td>
