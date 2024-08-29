@@ -7,38 +7,18 @@
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
-<button type="button" class="btn btn-secondary" onclick="window.history.back()">Voltar</button>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Sistema de Gerenciamento</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/alunos/ofertas}">Ofertas de Estágio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/alunos/ofertas-inscritas}">Ofertas inscritas</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<div th:replace="~{fragments/navbar-aluno :: navbar}"></div>
 <div class="container mt-5">
     <h2>Ofertas Inscritas</h2>
     <table class="table">
         <thead>
         <tr>
-            <th>ID</th>
             <th>Oferta</th>
             <th>Status</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="candidatura : ${candidaturas}">
-            <td th:text="${candidatura.ofertaEstagio.idOfertaEstagio}"></td>
             <td th:text="${candidatura.ofertaEstagio.atividadePrincipal}"></td>
             <td th:text="${candidatura.status}"></td>
         </tr>
