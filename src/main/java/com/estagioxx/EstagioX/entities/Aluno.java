@@ -16,10 +16,16 @@ public class Aluno implements Serializable {
     private Long idAluno;
     @Column(name = "nomeAluno",nullable = false)
     private String nome;
+    @Column(name = "sobrenomeAluno",nullable = false)
+    private String sobrenome;
     @Column(name = "usernameAluno",nullable = false)
     private String username;
     @Column(name = "passwordAluno",nullable = false)
     private String password;
+    @Column(name = "faculdadeAluno",nullable = false)
+    private String faculdade;
+    @Column(name = "telefoneAluno",nullable = false)
+    private String telefone;
     @ElementCollection(fetch = FetchType.LAZY)
     @Column(name = "habilidades")
     private Set<String> habilidades;
@@ -28,12 +34,14 @@ public class Aluno implements Serializable {
 
     }
 
-    public Aluno(Long idAluno, String nome, String username, Set<String> habilidades, String password) {
+    public Aluno(Long idAluno, String nome, String sobrenome, String username, String password, String faculdade, String telefone) {
         this.idAluno = idAluno;
         this.nome = nome;
+        this.sobrenome = sobrenome;
         this.username = username;
-        this.habilidades = habilidades;
         this.password = password;
+        this.faculdade = faculdade;
+        this.telefone = telefone;
     }
 
     public Long getIdAluno() {
@@ -52,6 +60,14 @@ public class Aluno implements Serializable {
         this.nome = nome;
     }
 
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -66,6 +82,22 @@ public class Aluno implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFaculdade() {
+        return faculdade;
+    }
+
+    public void setFaculdade(String faculdade) {
+        this.faculdade = faculdade;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public Set<String> getHabilidades() {
