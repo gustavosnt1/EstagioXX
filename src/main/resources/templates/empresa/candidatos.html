@@ -13,12 +13,16 @@
         <tr>
             <th>Nome Aluno</th>
             <th>Status</th>
+
         </tr>
         </thead>
         <tbody>
         <tr th:each="candidatura : ${candidaturas}">
             <td th:text="${candidatura.aluno.nome}"></td>
             <td th:text="${candidatura.status}"></td>
+            <td>
+                <a th:href="@{/empresas/fichaAluno/{id}(id=${candidatura.aluno.idAluno})}" class="btn btn-primary">Ver Ficha</a>
+            </td>
         </tr>
         </tbody>
     </table>
