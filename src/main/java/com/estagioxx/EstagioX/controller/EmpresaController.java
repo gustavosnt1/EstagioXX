@@ -1,6 +1,7 @@
 package com.estagioxx.EstagioX.controller;
 
 
+import com.estagioxx.EstagioX.entities.Candidatura;
 import com.estagioxx.EstagioX.entities.Empresa;
 import com.estagioxx.EstagioX.entities.OfertaEstagio;
 import com.estagioxx.EstagioX.services.EmpresaService;
@@ -25,6 +26,8 @@ public class EmpresaController {
 
     @Autowired
     private OfertaEstagioService ofertaEstagioService;
+
+
 
     @GetMapping("/cadastrar")
     public ModelAndView cadastrar() {
@@ -101,6 +104,14 @@ public class EmpresaController {
     public ModelAndView deletarOferta(@PathVariable Long id) {
         ofertaEstagioService.delete(id);
         return new ModelAndView("redirect:/empresas/listar-ofertas");
+    }
+
+    @GetMapping("/oferta/{id}/candidatos")
+    public ModelAndView listarCandidatos(@PathVariable Long id) {
+        List<Candidatura> candidaturas = empresaService.listarCandidatosPorOferta(id);
+        ModelAndView mav = new ModelAndView("coordenador/candidatos");
+        mav.addObject("candidaturas", candidaturas);
+        return mav;
     }
 }
 
