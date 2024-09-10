@@ -153,5 +153,4 @@ public class AlunoController {
         return mav;
     }
 
-
 }
