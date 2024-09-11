@@ -3,6 +3,8 @@ package com.estagioxx.EstagioX.services;
 
 import com.estagioxx.EstagioX.entities.Candidatura;
 import com.estagioxx.EstagioX.entities.Empresa;
+import com.estagioxx.EstagioX.entities.Estagio;
+import com.estagioxx.EstagioX.entities.OfertaEstagio;
 import com.estagioxx.EstagioX.repositories.CandidaturaRepository;
 import com.estagioxx.EstagioX.repositories.EmpresaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,11 @@ public class EmpresaService {
     @Autowired
     private CandidaturaRepository candidaturaRepository;
 
+    @Autowired
+    private EstagioService estagioService;
+
+    @Autowired
+    private OfertaEstagioService ofertaEstagioService;
 
     public List<Empresa> findAll() {
         return empresaRepository.findAll();
@@ -57,4 +64,28 @@ public class EmpresaService {
     public List<Candidatura> listarCandidatosPorOferta(Long ofertaId) {
         return candidaturaRepository.findByOfertaEstagio_IdOfertaEstagio(ofertaId);
     }
+
+    public void aprovarCandidato(Long candidaturaId) {
+        Candidatura candidatura = candidaturaRepository.findById(candidaturaId)
+                .orElseThrow(() -> new RuntimeException("Candidatura não encontrada"));
+
+        candidatura.setStatus(Candidatura.StatusCandidatura.ACEITA);
+        candidaturaRepository.save(candidatura);
+
+        OfertaEstagio ofertaEstagio = candidatura.getOfertaEstagio();
+
+        if (estagioService.existsByOfertaEstagio(ofertaEstagio.getIdOfertaEstagio())) {
+            return;
+        }
+
+        Estagio estagio = new Estagio();
+        estagio.setOfertaEstagio(ofertaEstagio);
+        estagio.setAluno(candidatura.getAluno());
+        estagioService.save(estagio);
+
+
+        ofertaEstagio.setPreenchida(true);
+        ofertaEstagioService.save(ofertaEstagio);
+    }
 }
+

@@ -90,9 +90,12 @@ public class AlunoController {
         List<OfertaEstagio> ofertasDisponiveis;
 
         if (query != null && !query.isEmpty()) {
-            ofertasDisponiveis = ofertaEstagioService.search(query, aluno.getIdAluno());
-        } else {
 
+            ofertasDisponiveis = ofertaEstagioService.search(query, aluno.getIdAluno())
+                    .stream()
+                    .filter(o -> !o.isPreenchida())
+                    .collect(Collectors.toList());
+        } else {
             List<Candidatura> candidaturas = candidaturaService.listarCandidaturasPorAluno(aluno.getIdAluno());
 
             Set<Long> ofertasCandidatas = candidaturas.stream()
@@ -100,6 +103,7 @@ public class AlunoController {
                     .collect(Collectors.toSet());
 
             ofertasDisponiveis = ofertaEstagioService.findAll().stream()
+                    .filter(o -> !o.isPreenchida())
                     .filter(o -> !ofertasCandidatas.contains(o.getIdOfertaEstagio()))
                     .collect(Collectors.toList());
         }

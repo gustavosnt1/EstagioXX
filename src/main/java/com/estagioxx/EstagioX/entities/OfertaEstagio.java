@@ -26,6 +26,8 @@ public class OfertaEstagio implements Serializable {
     private String habilidadesNecessaria;
     @Column(name = "habilidadesDesejavelEstagio", nullable = false)
     private String habilidadesDesejavel;
+    @Column(name = "preenchida", nullable = false)
+    private boolean preenchida = false;
 
     @ManyToOne
     @JoinColumn(name = "empresa_id")
@@ -118,6 +120,14 @@ public class OfertaEstagio implements Serializable {
 
     public void setEmpresas(Empresa empresas) {
         this.empresas = empresas;
+    }
+
+    public boolean isPreenchida() {
+        return preenchida;
+    }
+
+    public void setPreenchida(boolean preenchida) {
+        this.preenchida = preenchida;
     }
 
     @Override

@@ -55,7 +55,8 @@ public class OfertaEstagioService {
                 .collect(Collectors.toSet());
 
         return todasOfertas.stream()
-                .filter(o -> !ofertasCandidatas.contains(o.getIdOfertaEstagio()) &&
+                .filter(o -> !o.isPreenchida() && // Adiciona o filtro para ofertas preenchidas
+                        !ofertasCandidatas.contains(o.getIdOfertaEstagio()) &&
                         (o.getAtividadePrincipal().toLowerCase().contains(query.toLowerCase()) ||
                                 String.valueOf(o.getValorPago()).contains(query)))
                 .collect(Collectors.toList());
