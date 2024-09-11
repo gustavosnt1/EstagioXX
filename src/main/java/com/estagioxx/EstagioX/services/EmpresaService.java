@@ -1,7 +1,9 @@
 package com.estagioxx.EstagioX.services;
 
 
+import com.estagioxx.EstagioX.entities.Candidatura;
 import com.estagioxx.EstagioX.entities.Empresa;
+import com.estagioxx.EstagioX.repositories.CandidaturaRepository;
 import com.estagioxx.EstagioX.repositories.EmpresaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ public class EmpresaService {
 
     @Autowired
     private EmpresaRepository empresaRepository;
+
+    @Autowired
+    private CandidaturaRepository candidaturaRepository;
 
 
     public List<Empresa> findAll() {
@@ -47,5 +52,9 @@ public class EmpresaService {
 
     public Empresa findByEmail(String email) {
         return empresaRepository.findByEmail(email).orElse(null);
+    }
+
+    public List<Candidatura> listarCandidatosPorOferta(Long ofertaId) {
+        return candidaturaRepository.findByOfertaEstagio_IdOfertaEstagio(ofertaId);
     }
 }

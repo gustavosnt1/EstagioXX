@@ -1,8 +1,11 @@
 package com.estagioxx.EstagioX.controller;
 
 
+import com.estagioxx.EstagioX.entities.Aluno;
+import com.estagioxx.EstagioX.entities.Candidatura;
 import com.estagioxx.EstagioX.entities.Empresa;
 import com.estagioxx.EstagioX.entities.OfertaEstagio;
+import com.estagioxx.EstagioX.services.AlunoService;
 import com.estagioxx.EstagioX.services.EmpresaService;
 import com.estagioxx.EstagioX.services.OfertaEstagioService;
 import jakarta.servlet.http.HttpSession;
@@ -25,6 +28,11 @@ public class EmpresaController {
 
     @Autowired
     private OfertaEstagioService ofertaEstagioService;
+
+    @Autowired
+    private AlunoService alunoService;
+
+
 
     @GetMapping("/cadastrar")
     public ModelAndView cadastrar() {
@@ -102,6 +110,25 @@ public class EmpresaController {
         ofertaEstagioService.delete(id);
         return new ModelAndView("redirect:/empresas/listar-ofertas");
     }
+
+    @GetMapping("/oferta/{id}/candidatos")
+    public ModelAndView listarCandidatos(@PathVariable Long id) {
+        List<Candidatura> candidaturas = empresaService.listarCandidatosPorOferta(id);
+        ModelAndView mav = new ModelAndView("empresa/candidatos");
+        mav.addObject("candidaturas", candidaturas);
+        return mav;
+    }
+
+    @GetMapping("/fichaAluno/{id}")
+    public ModelAndView verFichaAluno(@PathVariable Long id) {
+        Aluno aluno = alunoService.findById(id);
+
+        ModelAndView mav = new ModelAndView("empresa/ficha-aluno");
+        mav.addObject("aluno", aluno);
+
+        return mav;
+    }
+
 }
 
 
