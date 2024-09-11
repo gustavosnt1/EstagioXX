@@ -25,21 +25,6 @@ public class OfertaEstagioController {
     @Autowired
     private AlunoService alunoService;
 
-    @GetMapping("/listar")
-    public String listarOfertas(Model model, HttpSession session) {
-        Long idAluno = (Long) session.getAttribute("idAluno");
-        model.addAttribute("idAluno", idAluno);
-        model.addAttribute("ofertas", ofertaEstagioService.findAll());
-        return "ofertaestagio/lista";
-    }
-
-
-    @GetMapping("/cadastrar")
-    public String cadastrar(@RequestParam("empresaId") Long empresaId, Model model) {
-        model.addAttribute("idEmpresa", empresaId);
-        model.addAttribute("ofertaEstagio", new OfertaEstagio());
-        return "ofertaestagio/cadastro";
-    }
 
     @PostMapping("/candidatar")
     public String candidatar(@RequestParam Long idOfertaEstagio, HttpSession session) {
