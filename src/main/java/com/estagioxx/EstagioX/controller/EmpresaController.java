@@ -1,12 +1,11 @@
 package com.estagioxx.EstagioX.controller;
 
 
-import com.estagioxx.EstagioX.entities.Aluno;
-import com.estagioxx.EstagioX.entities.Candidatura;
-import com.estagioxx.EstagioX.entities.Empresa;
-import com.estagioxx.EstagioX.entities.OfertaEstagio;
+import com.estagioxx.EstagioX.entities.*;
+import com.estagioxx.EstagioX.repositories.CandidaturaRepository;
 import com.estagioxx.EstagioX.services.AlunoService;
 import com.estagioxx.EstagioX.services.EmpresaService;
+import com.estagioxx.EstagioX.services.EstagioService;
 import com.estagioxx.EstagioX.services.OfertaEstagioService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,12 @@ public class EmpresaController {
 
     @Autowired
     private AlunoService alunoService;
+
+    @Autowired
+    private CandidaturaRepository candidaturaRepository;
+
+    @Autowired
+    private EstagioService estagioService;
 
 
 
@@ -129,6 +134,15 @@ public class EmpresaController {
         return mav;
     }
 
+    @PostMapping("/aprovar-candidato/{id}")
+    public ModelAndView aprovarCandidato(@PathVariable("id") Long candidaturaId) {
+        try {
+            empresaService.aprovarCandidato(candidaturaId);
+            return new ModelAndView("redirect:/empresas/listar-ofertas").addObject("success", "Candidato aprovado com sucesso!");
+        } catch (RuntimeException e) {
+            return new ModelAndView("redirect:/empresas/listar-ofertas").addObject("error", "Erro ao aprovar candidato: " + e.getMessage());
+        }
+    }
 }
 
 
