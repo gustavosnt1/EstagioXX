@@ -87,5 +87,30 @@ public class EmpresaService {
         ofertaEstagio.setPreenchida(true);
         ofertaEstagioService.save(ofertaEstagio);
     }
+
+    public void update(Long id, Empresa empresaAtualizada) {
+        Optional<Empresa> empresaOptional = empresaRepository.findById(id);
+
+        if (empresaOptional.isPresent()) {
+            Empresa empresaExistente = empresaOptional.get();
+
+            empresaExistente.setNome(empresaAtualizada.getNome());
+            empresaExistente.setCnpj(empresaAtualizada.getCnpj());
+            empresaExistente.setEmail(empresaAtualizada.getEmail());
+            empresaExistente.setTelefone(empresaAtualizada.getTelefone());
+            empresaExistente.setEndereco(empresaAtualizada.getEndereco());
+            empresaExistente.setPessoaContato(empresaAtualizada.getPessoaContato());
+            empresaExistente.setAtividadePrincipal(empresaAtualizada.getAtividadePrincipal());
+            empresaExistente.setUrlEmpresa(empresaAtualizada.getUrlEmpresa());
+
+            if (empresaAtualizada.getPdfEmpresa() != null) {
+                empresaExistente.setPdfEmpresa(empresaAtualizada.getPdfEmpresa());
+            }
+
+            empresaRepository.save(empresaExistente);
+        } else {
+            throw new RuntimeException("Empresa não encontrada para o ID: " + id);
+        }
+    }
 }
 
