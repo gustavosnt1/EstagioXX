@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem de Empresas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Sistema de Gerenciamento</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/coordenador/empresas}">Início</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/coordenador/empresas/novo}">Atulizar Empresa</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container mt-5">
+    <h2>Listagem de Empresas</h2>
+    <table class="table mt-3">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>CNPJ</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Endereço</th>
+            <th>Pessoa de Contato</th>
+            <th>Atividade Principal</th>
+            <th>URL</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="empresa : ${empresas}">
+            <td th:text="${empresa.nome}"></td>
+            <td th:text="${empresa.cnpj}"></td>
+            <td th:text="${empresa.email}"></td>
+            <td th:text="${empresa.telefone}"></td>
+            <td th:text="${empresa.endereco}"></td>
+            <td th:text="${empresa.pessoaContato}"></td>
+            <td th:text="${empresa.atividadePrincipal}"></td>
+            <td th:text="${empresa.urlEmpresa}"></td>
+            <td>
+                <a class="btn btn-primary" th:href="@{/coordenadores/empresas/editar/{id}(id=${empresa.idEmpresa})}">Editar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
