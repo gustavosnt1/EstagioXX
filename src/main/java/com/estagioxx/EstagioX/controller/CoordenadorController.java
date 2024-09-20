@@ -3,14 +3,18 @@ package com.estagioxx.EstagioX.controller;
 
 import com.estagioxx.EstagioX.entities.Candidatura;
 import com.estagioxx.EstagioX.entities.Coordenador;
+import com.estagioxx.EstagioX.entities.Empresa;
 import com.estagioxx.EstagioX.entities.OfertaEstagio;
 import com.estagioxx.EstagioX.services.CoordenadorService;
+import com.estagioxx.EstagioX.services.EmpresaService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -19,6 +23,9 @@ public class CoordenadorController {
 
     @Autowired
     private CoordenadorService coordenadorService;
+
+    @Autowired
+    private EmpresaService empresaService;
 
     @Autowired
     private HttpSession httpSession;
@@ -69,5 +76,32 @@ public class CoordenadorController {
         ModelAndView mav = new ModelAndView("coordenador/candidatos");
         mav.addObject("candidaturas", candidaturas);
         return mav;
+    }
+
+    @GetMapping("/listar-empresas")
+    public ModelAndView listarEmpresas() {
+        List<Empresa> empresas = empresaService.findAll();
+        ModelAndView mav = new ModelAndView("coordenador/listagem-empresa");
+        mav.addObject("empresas", empresas);
+        return mav;
+    }
+
+    @GetMapping("/empresas/editar/{id}")
+    public ModelAndView editar(@PathVariable Long id) {
+        Empresa empresa = empresaService.findById(id);
+        System.out.println(empresa);
+        System.out.println(id);
+        ModelAndView mav = new ModelAndView("coordenador/editar-empresa");
+        mav.addObject("empresa", empresa);
+        return mav;
+    }
+
+    @PostMapping("/empresas/atualizar")
+    public ModelAndView atualizar(@RequestParam("idEmpresa") Long id, @ModelAttribute Empresa empresa, @RequestParam(value = "pdfEmpresa", required = false) MultipartFile pdfEmpresa) throws IOException {
+        if (pdfEmpresa != null && !pdfEmpresa.isEmpty()) {
+            empresa.setPdfEmpresa(pdfEmpresa.getBytes());
+        }
+        empresaService.update(id, empresa);
+        return new ModelAndView("redirect:/coordenadores/dashboard");
     }
 }
