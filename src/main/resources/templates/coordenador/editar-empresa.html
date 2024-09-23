@@ -10,7 +10,7 @@
 <div class="container mt-5">
     <h2 class="text-center">Editar Empresa</h2>
     <form th:action="@{/coordenadores/empresas/atualizar}" th:object="${empresa}" method="POST">
-        <input type="hidden" name="_method" value="put"/>
+        <input type="hidden" th:field="*{idEmpresa}" />
         <div class="mb-3">
             <label for="nome" class="form-label">Nome</label>
             <input type="text" class="form-control" id="nome" th:field="*{nome}" placeholder="Digite o nome da empresa." required>
