@@ -14,6 +14,7 @@
                 <span th:text="${candidatura.aluno.sobrenome}"></span> -
                 <span class="badge bg-info text-dark" th:text="${candidatura.status}"></span>
             </div>
+            <a th:href="@{/empresas/fichaAluno/{id}(id=${candidatura.aluno.idAluno})}" class="btn btn-primary me-2">Ver Ficha</a>
             <!-- Formulário para confirmar o estágio -->
             <form th:action="@{/empresas/confirmar-estagio/{candidaturaId}(candidaturaId=${candidatura.idCandidatura})}" method="post">
                 <div class="mb-3">
