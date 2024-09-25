@@ -65,28 +65,6 @@ public class EmpresaService {
         return candidaturaRepository.findByOfertaEstagio_IdOfertaEstagio(ofertaId);
     }
 
-    public void aprovarCandidato(Long candidaturaId) {
-        Candidatura candidatura = candidaturaRepository.findById(candidaturaId)
-                .orElseThrow(() -> new RuntimeException("Candidatura não encontrada"));
-
-        candidatura.setStatus(Candidatura.StatusCandidatura.ACEITA);
-        candidaturaRepository.save(candidatura);
-
-        OfertaEstagio ofertaEstagio = candidatura.getOfertaEstagio();
-
-        if (estagioService.existsByOfertaEstagio(ofertaEstagio.getIdOfertaEstagio())) {
-            return;
-        }
-
-        Estagio estagio = new Estagio();
-        estagio.setOfertaEstagio(ofertaEstagio);
-        estagio.setAluno(candidatura.getAluno());
-        estagioService.save(estagio);
-
-
-        ofertaEstagio.setPreenchida(true);
-        ofertaEstagioService.save(ofertaEstagio);
-    }
 
     public void update(Long id, Empresa empresaAtualizada) {
         Optional<Empresa> empresaOptional = empresaRepository.findById(id);

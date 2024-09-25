@@ -3,6 +3,7 @@ package com.estagioxx.EstagioX.controller;
 
 import com.estagioxx.EstagioX.entities.*;
 import com.estagioxx.EstagioX.repositories.CandidaturaRepository;
+import com.estagioxx.EstagioX.repositories.OfertaEstagioRepository;
 import com.estagioxx.EstagioX.services.AlunoService;
 import com.estagioxx.EstagioX.services.EmpresaService;
 import com.estagioxx.EstagioX.services.EstagioService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -36,6 +38,9 @@ public class EmpresaController {
 
     @Autowired
     private EstagioService estagioService;
+
+    @Autowired
+    OfertaEstagioRepository ofertaEstagioRepository;
 
 
 
@@ -116,13 +121,13 @@ public class EmpresaController {
         return new ModelAndView("redirect:/empresas/listar-ofertas");
     }
 
-    @GetMapping("/oferta/{id}/candidatos")
+/*    @GetMapping("/oferta/{id}/candidatos")
     public ModelAndView listarCandidatos(@PathVariable Long id) {
         List<Candidatura> candidaturas = empresaService.listarCandidatosPorOferta(id);
         ModelAndView mav = new ModelAndView("empresa/candidatos");
         mav.addObject("candidaturas", candidaturas);
         return mav;
-    }
+    }*/
 
     @GetMapping("/fichaAluno/{id}")
     public ModelAndView verFichaAluno(@PathVariable Long id) {
@@ -134,14 +139,55 @@ public class EmpresaController {
         return mav;
     }
 
-    @PostMapping("/aprovar-candidato/{id}")
-    public ModelAndView aprovarCandidato(@PathVariable("id") Long candidaturaId) {
-        try {
-            empresaService.aprovarCandidato(candidaturaId);
-            return new ModelAndView("redirect:/empresas/listar-ofertas").addObject("success", "Candidato aprovado com sucesso!");
-        } catch (RuntimeException e) {
-            return new ModelAndView("redirect:/empresas/listar-ofertas").addObject("error", "Erro ao aprovar candidato: " + e.getMessage());
+    @GetMapping("/oferta/{id}/candidatos")
+    public ModelAndView listarCandidatos(@PathVariable Long id) {
+        Empresa empresa = (Empresa) httpSession.getAttribute("empresa");
+        if (empresa == null) {
+            return new ModelAndView("redirect:/empresas/login");
         }
+
+        List<Candidatura> candidaturas = empresaService.listarCandidatosPorOferta(id);
+        OfertaEstagio ofertaEstagio = ofertaEstagioService.findById(id);
+
+        ModelAndView mav = new ModelAndView("empresa/candidatos");
+        mav.addObject("candidaturas", candidaturas);
+        mav.addObject("ofertaEstagio", ofertaEstagio);
+        return mav;
+    }
+
+    @PostMapping("/confirmar-estagio/{candidaturaId}")
+    public ModelAndView confirmarEstagio(
+            @PathVariable Long candidaturaId,
+            @RequestParam("dataInicio") LocalDate dataInicio,
+            @RequestParam("dataTermino") LocalDate dataTermino,
+            @RequestParam("valorEstagio") double valorEstagio) {
+
+        Candidatura candidatura = candidaturaRepository.findById(candidaturaId).orElse(null);
+
+        if (candidatura != null) {
+            candidatura.setStatus(Candidatura.StatusCandidatura.ACEITA);
+            candidaturaRepository.save(candidatura);
+
+            // Cria um novo Estágio
+            Estagio estagio = new Estagio();
+            estagio.setAluno(candidatura.getAluno());
+            estagio.setOfertaEstagio(candidatura.getOfertaEstagio());
+            estagio.setDataInicio(dataInicio);
+            estagio.setDataTermino(dataTermino);
+            estagio.setValorEstagio(valorEstagio);
+
+            // Salva o estágio
+            estagioService.save(estagio);
+
+            // Atualiza a oferta para marcar como preenchida
+            OfertaEstagio ofertaEstagio = candidatura.getOfertaEstagio();
+            if (ofertaEstagio != null) {
+                ofertaEstagio.setPreenchida(true); // Marca como preenchida
+                ofertaEstagioRepository.save(ofertaEstagio); // Salva a atualização da oferta
+            }
+        }
+
+        return new ModelAndView("redirect:/empresas/listar-ofertas");
     }
 }
 
