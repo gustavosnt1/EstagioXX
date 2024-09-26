@@ -7,8 +7,10 @@ import com.estagioxx.EstagioX.services.AlunoService;
 import com.estagioxx.EstagioX.services.CandidaturaService;
 import com.estagioxx.EstagioX.services.OfertaEstagioService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,7 +45,13 @@ public class AlunoController {
     }
 
     @PostMapping("/salvar")
-    public ModelAndView salvar(@ModelAttribute Aluno aluno) {
+    public ModelAndView salvar(@Valid @ModelAttribute Aluno aluno, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            ModelAndView mav = new ModelAndView("aluno/criar-conta");
+            mav.addObject("aluno", aluno);
+            mav.addObject("habilidades", Arrays.asList("Programação Python", "Design em CSS", "Especialista em UX", "Programador de Testes"));
+            return mav;
+        }
         alunoService.save(aluno);
         return new ModelAndView("redirect:/alunos/login");
     }

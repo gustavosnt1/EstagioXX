@@ -1,6 +1,9 @@
 package com.estagioxx.EstagioX.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -14,16 +17,27 @@ public class Aluno implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idAluno")
     private Long idAluno;
+
+    @NotBlank(message = "O nome não pode estar vazio.")
     @Column(name = "nomeAluno",nullable = false)
     private String nome;
+    @NotBlank(message = "O sobrenome não pode estar vazio.")
     @Column(name = "sobrenomeAluno",nullable = false)
     private String sobrenome;
+
+    @NotBlank(message = "O username não pode estar vazio.")
     @Column(name = "usernameAluno",nullable = false)
     private String username;
+
+    @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres.")
     @Column(name = "passwordAluno",nullable = false)
     private String password;
+
+    @NotBlank(message = "A faculdade não pode estar vazia.")
     @Column(name = "faculdadeAluno",nullable = false)
     private String faculdade;
+
+    @Pattern(regexp = "^\\d{10,11}$", message = "O telefone deve conter entre 10 a 11 dígitos.")
     @Column(name = "telefoneAluno",nullable = false)
     private String telefone;
     @ElementCollection(fetch = FetchType.LAZY)

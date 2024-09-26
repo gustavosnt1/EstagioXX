@@ -14,27 +14,33 @@
   <form th:action="@{/alunos/salvar}" th:object="${aluno}" method="post">
     <div class="mb-3">
       <label for="nome" class="form-label">Nome</label>
-      <input type="text" class="form-control" id="nome" th:field="*{nome}" placeholder="Digite seu nome" required>
+      <input type="text" class="form-control" id="nome" th:field="*{nome}" placeholder="Digite seu nome">
+      <div class="text-danger" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Nome inválido</div>
     </div>
     <div class="mb-3">
       <label for="sobrenome" class="form-label">Sobrenome</label>
       <input type="text" class="form-control" id="sobrenome" th:field="*{sobrenome}" placeholder="Digite uma senha" required>
+      <div class="text-danger" th:if="${#fields.hasErrors('sobrenome')}" th:errors="*{sobrenome}">Sobrenome inválido</div>
     </div>
     <div class="mb-3">
       <label for="username" class="form-label">Username</label>
       <input type="text" class="form-control" id="username" th:field="*{username}" placeholder="Escolha um username" required>
+      <div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username inválido</div>
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Senha</label>
       <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Digite uma senha" required>
+      <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Senha inválida</div>
     </div>
     <div class="mb-3">
       <label for="faculdade" class="form-label">Faculdade</label>
       <input type="text" class="form-control" id="faculdade" th:field="*{faculdade}" placeholder="Digite uma senha" required>
+      <div class="text-danger" th:if="${#fields.hasErrors('faculdade')}" th:errors="*{faculdade}">Faculdade inválida</div>
     </div>
     <div class="mb-3">
       <label for="telefone" class="form-label">Telefone</label>
       <input type="text" class="form-control" id="telefone" th:field="*{telefone}" placeholder="Digite uma senha" required>
+      <div class="text-danger" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}">Telefone inválido</div>
     </div>
 
     <div class="mb-3">
