@@ -38,9 +38,6 @@
             <td th:each="habilidade : ${aluno.habilidades}" th:text="${habilidade}">Habilidade</td>
         </tr>
     </table>
-    <form th:action="@{/empresas/aprovar-candidato/{id}(id=${aluno.idAluno})}" method="post">
-        <button type="submit" class="btn btn-success">Aprovar Candidato</button>
-    </form>
     <a th:href="@{/empresas/dashboard}" class="btn btn-primary">Voltar ao Dashboard</a>
 </div>
 </body>
