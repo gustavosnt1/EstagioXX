@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,7 +40,12 @@ public class CoordenadorController {
     }
 
     @PostMapping("/salvar")
-    public ModelAndView salvar(@Valid @ModelAttribute Coordenador coordenador) {
+    public ModelAndView salvar(@Valid @ModelAttribute Coordenador coordenador, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            ModelAndView mav = new ModelAndView("coordenador/criar-conta");
+            mav.addObject("coordenador", coordenador);
+            return mav;
+        }
         coordenadorService.save(coordenador);
         return new ModelAndView("redirect:/coordenadores/login");
     }
