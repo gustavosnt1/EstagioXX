@@ -1,6 +1,10 @@
 package com.estagioxx.EstagioX.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,20 +16,38 @@ public class OfertaEstagio implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idOfertaEstagio;
+    @NotBlank(message = "A atividade principal é obrigatória.")
     @Column(name = "atividadePrincipalEstagio", nullable = false)
     private String atividadePrincipal;
+
+    @NotBlank(message = "A carga horária semanal é obrigatória.")
+    @Size(max = 20, message = "A carga horária semanal não pode exceder 20 caracteres.")
     @Column(name = "chSemanalEstagio", nullable = false)
     private String chSemanal;
+
+    @NotNull(message = "O valor pago é obrigatório.")
+    @Positive(message = "O valor pago deve ser positivo.")
     @Column(name = "valorEstagio", nullable = false)
     private double valorPago;
+
+    @NotNull(message = "O valor do vale transporte é obrigatório.")
+    @Positive(message = "O valor do vale transporte deve ser positivo.")
     @Column(name = "valeTransporteEstagio", nullable = false)
     private double valeTransporte;
+
+    @NotBlank(message = "Os pré-requisitos são obrigatórios.")
     @Column(name = "preRequisitosEstagio", nullable = false)
     private String preRequisitos;
+
+    @NotBlank(message = "As habilidades necessárias são obrigatórias.")
     @Column(name = "habilidadesNecessariaEstagio", nullable = false)
     private String habilidadesNecessaria;
+
+    @NotBlank(message = "As habilidades desejáveis são obrigatórias.")
     @Column(name = "habilidadesDesejavelEstagio", nullable = false)
     private String habilidadesDesejavel;
+
+
     @Column(name = "preenchida", nullable = false)
     private boolean preenchida = false;
 

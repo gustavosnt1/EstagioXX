@@ -87,7 +87,15 @@ public class EmpresaController {
 
     @GetMapping("/dashboard")
     public ModelAndView dashboard() {
-        return new ModelAndView("empresa/dashboard");
+        Empresa empresa = (Empresa) httpSession.getAttribute("empresa");
+
+        if (empresa == null) {
+            return new ModelAndView("redirect:/empresas/login");
+        }
+
+        ModelAndView mav = new ModelAndView("empresa/dashboard");
+        mav.addObject("nomeEmpresa", empresa.getNome());  // Adiciona o nome do aluno ao modelo
+        return mav;
     }
 
     @GetMapping("/criar-oferta")
@@ -122,6 +130,7 @@ public class EmpresaController {
         List<OfertaEstagio> ofertas = ofertaEstagioService.findByEmpresa(empresa);
         ModelAndView mav = new ModelAndView("empresa/ofertas");
         mav.addObject("ofertas", ofertas);
+        mav.addObject("nomeEmpresa", empresa.getNome());
         return mav;
     }
 
@@ -131,13 +140,6 @@ public class EmpresaController {
         return new ModelAndView("redirect:/empresas/listar-ofertas");
     }
 
-    /*    @GetMapping("/oferta/{id}/candidatos")
-    public ModelAndView listarCandidatos(@PathVariable Long id) {
-        List<Candidatura> candidaturas = empresaService.listarCandidatosPorOferta(id);
-        ModelAndView mav = new ModelAndView("empresa/candidatos");
-        mav.addObject("candidaturas", candidaturas);
-        return mav;
-    }*/
 
     @GetMapping("/fichaAluno/{id}")
     public ModelAndView verFichaAluno(@PathVariable Long id) {
