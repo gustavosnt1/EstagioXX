@@ -2,9 +2,11 @@ package com.estagioxx.EstagioX.services;
 
 import com.estagioxx.EstagioX.entities.Candidatura;
 import com.estagioxx.EstagioX.entities.Coordenador;
+import com.estagioxx.EstagioX.entities.Estagio;
 import com.estagioxx.EstagioX.entities.OfertaEstagio;
 import com.estagioxx.EstagioX.repositories.CandidaturaRepository;
 import com.estagioxx.EstagioX.repositories.CoordenadorRepository;
+import com.estagioxx.EstagioX.repositories.EstagioRepository;
 import com.estagioxx.EstagioX.repositories.OfertaEstagioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class CoordenadorService {
 
     @Autowired
     private CandidaturaRepository candidaturaRepository;
+
+    @Autowired
+    private EstagioService estagioService;
 
     public Coordenador save(Coordenador coordenador) {
         return coordenadorRepository.save(coordenador);
@@ -43,5 +48,9 @@ public class CoordenadorService {
 
     public List<Candidatura> listarCandidatosPorOferta(Long ofertaId) {
         return candidaturaRepository.findByOfertaEstagio_IdOfertaEstagio(ofertaId);
+    }
+
+    public List<Estagio> listarEstagios() {
+        return estagioService.listarEstagios();
     }
 }
