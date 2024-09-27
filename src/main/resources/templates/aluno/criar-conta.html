@@ -19,7 +19,7 @@
     </div>
     <div class="mb-3">
       <label for="sobrenome" class="form-label">Sobrenome</label>
-      <input type="text" class="form-control" id="sobrenome" th:field="*{sobrenome}" placeholder="Digite uma senha" required>
+      <input type="text" class="form-control" id="sobrenome" th:field="*{sobrenome}" placeholder="Digite o sobrenome" required>
       <div class="text-danger" th:if="${#fields.hasErrors('sobrenome')}" th:errors="*{sobrenome}">Sobrenome inválido</div>
     </div>
     <div class="mb-3">
@@ -34,12 +34,12 @@
     </div>
     <div class="mb-3">
       <label for="faculdade" class="form-label">Faculdade</label>
-      <input type="text" class="form-control" id="faculdade" th:field="*{faculdade}" placeholder="Digite uma senha" required>
+      <input type="text" class="form-control" id="faculdade" th:field="*{faculdade}" placeholder="Digite o nome da faculdade" required>
       <div class="text-danger" th:if="${#fields.hasErrors('faculdade')}" th:errors="*{faculdade}">Faculdade inválida</div>
     </div>
     <div class="mb-3">
       <label for="telefone" class="form-label">Telefone</label>
-      <input type="text" class="form-control" id="telefone" th:field="*{telefone}" placeholder="Digite uma senha" required>
+      <input type="text" class="form-control" id="telefone" th:field="*{telefone}" placeholder="Digite o seu numero" required>
       <div class="text-danger" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}">Telefone inválido</div>
     </div>
 
