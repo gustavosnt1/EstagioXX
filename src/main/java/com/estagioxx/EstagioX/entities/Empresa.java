@@ -1,6 +1,8 @@
 package com.estagioxx.EstagioX.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,22 +17,41 @@ public class Empresa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idEmpresa")
     private Long idEmpresa;
-    @Column(name = "nomeEmpresa",nullable = false)
+
+    @NotBlank(message = "O nome da empresa não pode estar vazio.")
+    @Column(name = "nomeEmpresa", nullable = false)
     private String nome;
-    @Column(name = "cnpjEmpresa",nullable = false)
+
+    @NotBlank(message = "O CNPJ não pode estar vazio.")
+    @Pattern(regexp = "\\d{14}", message = "O CNPJ deve conter 14 dígitos.")
+    @Column(name = "cnpjEmpresa", nullable = false)
     private String cnpj;
-    @Column(name = "emailEmpresa",nullable = false)
+
+    @NotBlank(message = "O e-mail não pode estar vazio.")
+    @Column(name = "emailEmpresa", nullable = false)
     private String email;
-    @Column(name = "telefoneEmpresa",nullable = false)
+
+    @Pattern(regexp = "^\\d{10,11}$", message = "O telefone deve conter entre 10 a 11 dígitos.")
+    @Column(name = "telefoneEmpresa", nullable = false)
     private String telefone;
-    @Column(name = "enderecoEmpresa",nullable = false)
+
+    @NotBlank(message = "O endereço não pode estar vazio.")
+    @Column(name = "enderecoEmpresa", nullable = false)
     private String endereco;
-    @Column(name = "pessoaContatoEmpresa",nullable = false)
+
+    @NotBlank(message = "A pessoa de contato não pode estar vazia.")
+    @Column(name = "pessoaContatoEmpresa", nullable = false)
     private String pessoaContato;
-    @Column(name = "atividadePrincipalEmpresa",nullable = false)
+
+    @NotBlank(message = "A atividade principal não pode estar vazia.")
+    @Column(name = "atividadePrincipalEmpresa", nullable = false)
     private String atividadePrincipal;
+
+    @NotBlank(message = "A URL da empresa não pode estar vazia.")
     @Column(name = "urlEmpresa", nullable = false)
     private String urlEmpresa;
+
+    @Lob
     @Column(name = "pdfEmpresa", nullable = true)
     private byte[] pdfEmpresa;
 
