@@ -83,7 +83,15 @@ public class AlunoController {
 
     @GetMapping("/dashboard")
     public ModelAndView dashboard() {
-        return new ModelAndView("aluno/dashboard");
+        Aluno aluno = (Aluno) httpSession.getAttribute("aluno");
+
+        if (aluno == null) {
+            return new ModelAndView("redirect:/alunos/login");
+        }
+
+        ModelAndView mav = new ModelAndView("aluno/dashboard");
+        mav.addObject("nomeAluno", aluno.getNome());  // Adiciona o nome do aluno ao modelo
+        return mav;
     }
 
 
@@ -119,6 +127,7 @@ public class AlunoController {
         ModelAndView mav = new ModelAndView("aluno/listar-ofertas");
         mav.addObject("ofertas", ofertasDisponiveis);
         mav.addObject("query", query);
+        mav.addObject("nomeAluno", aluno.getNome()); //
         return mav;
     }
 
@@ -162,6 +171,7 @@ public class AlunoController {
 
         ModelAndView mav = new ModelAndView("aluno/ofertas-inscritas");
         mav.addObject("candidaturas", candidaturas);
+        mav.addObject("nomeAluno", aluno.getNome());
         return mav;
     }
 
