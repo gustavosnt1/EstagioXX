@@ -8,6 +8,7 @@ import com.estagioxx.EstagioX.entities.OfertaEstagio;
 import com.estagioxx.EstagioX.services.CoordenadorService;
 import com.estagioxx.EstagioX.services.EmpresaService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,7 @@ public class CoordenadorController {
     }
 
     @PostMapping("/salvar")
-    public ModelAndView salvar(@ModelAttribute Coordenador coordenador) {
+    public ModelAndView salvar(@Valid @ModelAttribute Coordenador coordenador) {
         coordenadorService.save(coordenador);
         return new ModelAndView("redirect:/coordenadores/login");
     }
@@ -89,15 +90,15 @@ public class CoordenadorController {
     @GetMapping("/empresas/editar/{id}")
     public ModelAndView editar(@PathVariable Long id) {
         Empresa empresa = empresaService.findById(id);
-        System.out.println(empresa);
-        System.out.println(id);
         ModelAndView mav = new ModelAndView("coordenador/editar-empresa");
         mav.addObject("empresa", empresa);
         return mav;
     }
 
     @PostMapping("/empresas/atualizar")
-    public ModelAndView atualizar(@RequestParam("idEmpresa") Long id, @ModelAttribute Empresa empresa, @RequestParam(value = "pdfEmpresa", required = false) MultipartFile pdfEmpresa) throws IOException {
+    public ModelAndView atualizar(@RequestParam("idEmpresa") Long id,
+                                  @Valid @ModelAttribute Empresa empresa,
+                                  @RequestParam(value = "pdfEmpresa", required = false) MultipartFile pdfEmpresa) throws IOException {
         if (pdfEmpresa != null && !pdfEmpresa.isEmpty()) {
             empresa.setPdfEmpresa(pdfEmpresa.getBytes());
         }
