@@ -51,7 +51,7 @@ public class Empresa implements Serializable {
     @Column(name = "urlEmpresa", nullable = false)
     private String urlEmpresa;
 
-    @Lob
+
     @Column(name = "pdfEmpresa", nullable = true)
     private byte[] pdfEmpresa;
 
