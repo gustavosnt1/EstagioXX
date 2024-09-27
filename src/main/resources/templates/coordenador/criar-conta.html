@@ -14,17 +14,17 @@
     <form th:action="@{/coordenadores/salvar}" th:object="${coordenador}" method="post">
         <div class="mb-3">
             <label for="nome" class="form-label">Nome</label>
-            <input type="text" class="form-control" id="nome" th:field="*{nome}" placeholder="Digite seu nome" required>
+            <input type="text" class="form-control" id="nome" th:field="*{nome}" placeholder="Digite seu nome" >
             <div class="text-danger" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Nome inválido</div>
         </div>
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" th:field="*{username}" placeholder="Escolha um username" required>
+            <input type="text" class="form-control" id="username" th:field="*{username}" placeholder="Escolha um username" >
             <div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username inválido</div>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Senha</label>
-            <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Digite uma senha" required>
+            <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Digite uma senha" >
             <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Senha inválida</div>
         </div>
         <button type="submit" class="btn btn-primary">Criar Conta</button>
