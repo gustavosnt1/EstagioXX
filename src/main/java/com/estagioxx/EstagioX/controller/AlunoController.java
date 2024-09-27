@@ -175,4 +175,10 @@ public class AlunoController {
         return mav;
     }
 
+    @GetMapping("/logout")
+    public ModelAndView logout() {
+        httpSession.invalidate();
+        return new ModelAndView("redirect:/home");
+    }
+
 }
