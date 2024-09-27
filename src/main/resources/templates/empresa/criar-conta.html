@@ -15,26 +15,32 @@
     <div class="mb-3">
       <label for="nome" class="form-label">Nome</label>
       <input type="text" class="form-control" id="nome" th:field="*{nome}" placeholder="Digite seu nome." required>
+      <div class="text-danger" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Nome inválido</div>
     </div>
     <div class="mb-3">
       <label for="cnpj" class="form-label">CNPJ</label>
       <input type="text" class="form-control" id="cnpj" th:field="*{cnpj}" placeholder="Digite seu CNPJ." required>
+      <div class="text-danger" th:if="${#fields.hasErrors('cnpj')}" th:errors="*{cnpj}">CNPJ inválido</div>
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
       <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Digite seu e-mail." required>
+      <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email inválido</div>
     </div>
     <div class="mb-3">
       <label for="telefone" class="form-label">Telefone</label>
       <input type="text" class="form-control" id="telefone" th:field="*{telefone}" placeholder="Digite seu telefone." required>
+      <div class="text-danger" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}">Telefone inválido</div>
     </div>
     <div class="mb-3">
       <label for="endereco" class="form-label">Endereço</label>
       <input type="text" class="form-control" id="endereco" th:field="*{endereco}" placeholder="Digite seu endereço." required>
+      <div class="text-danger" th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}">Endereço inválido</div>
     </div>
     <div class="mb-3">
       <label for="pessoaContato" class="form-label">Pessoa Contato</label>
       <input type="text" class="form-control" id="pessoaContato" th:field="*{pessoaContato}" placeholder="Digite pessoa contato." required>
+      <div class="text-danger" th:if="${#fields.hasErrors('pessoaContato')}" th:errors="*{pessoaContato}">Pessoa de contato inválida</div>
     </div>
     <div class="mb-3">
       <label for="atividadePrincipal" class="form-label">Atividade principal</label>
@@ -44,11 +50,13 @@
     <div class="mb-3">
       <label for="urlEmpresa" class="form-label">URL Empresa</label>
       <input type="url" class="form-control" id="urlEmpresa" th:field="*{urlEmpresa}" placeholder="Digite a url da empresa." required>
+      <div class="text-danger" th:if="${#fields.hasErrors('urlEmpresa')}" th:errors="*{urlEmpresa}">URL inválida</div>
     </div>
 
     <div class="mb-3">
       <label for="pdfEmpresa">Documento de Comprovação (PDF)</label>
       <input type="file" class="form-control" id="pdfEmpresa" th:field="*{pdfEmpresa}" accept=".pdf" required>
+      <div class="text-danger" th:if="${#fields.hasErrors('pdfEmpresa')}" th:errors="*{pdfEmpresa}">Documento inválido, faça upload de um PDF.</div>
     </div>
 
     <button type="submit" class="btn btn-primary">Criar Conta</button>
