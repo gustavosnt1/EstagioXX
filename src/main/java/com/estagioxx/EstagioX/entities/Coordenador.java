@@ -1,6 +1,8 @@
 package com.estagioxx.EstagioX.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 
@@ -13,10 +15,17 @@ public class Coordenador implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idCoordenador")
     private Long idCoordenador;
+
+    @NotBlank(message = "O nome não pode estar vazio.")
     @Column(name = "nomeCoordenador", nullable = false)
     private String nome;
+
+    @NotBlank(message = "O username não pode estar vazio.")
     @Column(name = "usernameCoordenador", nullable = false)
     private String username;
+
+    @NotBlank(message = "A senha não pode estar vazia.")
+    @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres.")
     @Column(name = "passwordCoordenador", nullable = false)
     private String password;
 
