@@ -11,9 +11,14 @@ import com.estagioxx.EstagioX.services.AlunoService;
 import com.estagioxx.EstagioX.services.EmpresaService;
 import com.estagioxx.EstagioX.services.EstagioService;
 import com.estagioxx.EstagioX.services.OfertaEstagioService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/empresas")
@@ -194,5 +200,31 @@ public class EmpresaController {
         }
 
         return new ModelAndView("redirect:/empresas/listar-ofertas");
+    }
+
+    @GetMapping("/estagios/{id}/termo")
+    public ModelAndView visualizarTermoEstagio(@PathVariable Long id) {
+        Estagio estagio = estagioService.findById(id);
+        if (estagio == null) {
+            throw new EntityNotFoundException("Estágio não encontrado para o ID: " + id);
+        }
+
+        ModelAndView mav = new ModelAndView("estagio/visualizar_termo");
+        mav.addObject("estagio", estagio);
+        return mav;
+    }
+
+    @GetMapping("/baixar-termo-estagio/{id}")
+    public ResponseEntity<byte[]> baixarTermoEstagio(@PathVariable Long id) {
+        Estagio estagio = estagioService.findById(id);
+        if (estagio == null) {
+            throw new EntityNotFoundException("Estágio não encontrado para o ID: " + id);
+        }
+
+        byte[] pdfBytes = estagioService.gerarTermoEstagioPDF(estagio);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "termo_estagio_" + estagio.getIdEstagio() + ".pdf");
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
 }
