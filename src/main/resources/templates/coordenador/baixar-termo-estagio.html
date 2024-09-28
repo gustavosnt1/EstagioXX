@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizar Termo de Estágio</title>
+</head>
+<body>
+<h1>Termo de Estágio</h1>
+<p><strong>Aluno:</strong> <span th:text="${estagio.aluno.nome}"></span></p>
+<p><strong>Empresa:</strong> <span th:text="${estagio.ofertaEstagio.empresas.nome}"></span></p>
+<p><strong>Data de Início:</strong> <span th:text="${estagio.dataInicio}"></span></p>
+<p><strong>Data de Término:</strong> <span th:text="${estagio.dataTermino}"></span></p>
+<p><strong>Valor do Estágio:</strong> R$ <span th:text="${estagio.valorEstagio}"></span></p>
+
+<a th:href="@{/baixar-termo-estagio/{id}(id=${estagio.idEstagio})}">Baixar Termo de Estágio (PDF)</a>
+</body>
+</html>
