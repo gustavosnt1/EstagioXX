@@ -227,4 +227,10 @@ public class EmpresaController {
         headers.setContentDispositionFormData("attachment", "termo_estagio_" + estagio.getIdEstagio() + ".pdf");
         return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
+
+    @GetMapping("/logout")
+    public ModelAndView logout() {
+        httpSession.invalidate();
+        return new ModelAndView("redirect:/home");
+    }
 }
