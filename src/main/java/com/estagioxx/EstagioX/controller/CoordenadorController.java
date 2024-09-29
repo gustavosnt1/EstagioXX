@@ -68,9 +68,12 @@ public class CoordenadorController {
 
     @GetMapping("/dashboard")
     public ModelAndView mostrarDashboard() {
+        Coordenador coordenador = (Coordenador) httpSession.getAttribute("coordenador");
+
         List<OfertaEstagio> ofertas = coordenadorService.listarTodasOfertas();
         ModelAndView mav = new ModelAndView("coordenador/dashboard");
         mav.addObject("ofertas", ofertas);
+        mav.addObject("nomeCoordenador", coordenador.getNome());
         return mav;
     }
 
@@ -84,9 +87,13 @@ public class CoordenadorController {
 
     @GetMapping("/listar-empresas")
     public ModelAndView listarEmpresas() {
+        Coordenador coordenador = (Coordenador) httpSession.getAttribute("coordenador");
+
         List<Empresa> empresas = empresaService.findAll();
         ModelAndView mav = new ModelAndView("coordenador/listagem-empresa");
         mav.addObject("empresas", empresas);
+        mav.addObject("nomeCoordenador", coordenador.getNome());
+
         return mav;
     }
 
@@ -111,9 +118,20 @@ public class CoordenadorController {
 
     @GetMapping("/listar-estagios")
     public ModelAndView listarEstagios() {
+        Coordenador coordenador = (Coordenador) httpSession.getAttribute("coordenador");
+
         List<Estagio> estagios = coordenadorService.listarEstagios();
         ModelAndView mav = new ModelAndView("coordenador/listagem-estagio");
+
         mav.addObject("estagios", estagios);
+        mav.addObject("nomeCoordenador", coordenador.getNome());
+
         return mav;
+    }
+
+    @GetMapping("/logout")
+    public ModelAndView logout() {
+        httpSession.invalidate();
+        return new ModelAndView("redirect:/home");
     }
 }
