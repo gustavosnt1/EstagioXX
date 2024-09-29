@@ -2,16 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualizar Termo de Estágio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>Termo de Estágio</h1>
-<p><strong>Aluno:</strong> <span th:text="${estagio.aluno.nome}"></span></p>
-<p><strong>Empresa:</strong> <span th:text="${estagio.ofertaEstagio.empresas.nome}"></span></p>
-<p><strong>Data de Início:</strong> <span th:text="${estagio.dataInicio}"></span></p>
-<p><strong>Data de Término:</strong> <span th:text="${estagio.dataTermino}"></span></p>
-<p><strong>Valor do Estágio:</strong> R$ <span th:text="${estagio.valorEstagio}"></span></p>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Termo de Estágio</h1>
+    <div class="card shadow">
+        <div class="card-body">
+            <p><strong>Aluno:</strong> <span th:text="${estagio.aluno.nome}"></span></p>
+            <p><strong>Empresa:</strong> <span th:text="${estagio.ofertaEstagio.empresas.nome}"></span></p>
+            <p><strong>Data de Início:</strong> <span th:text="${estagio.dataInicio}"></span></p>
+            <p><strong>Data de Término:</strong> <span th:text="${estagio.dataTermino}"></span></p>
+            <p><strong>Valor do Estágio:</strong> R$ <span th:text="${estagio.valorEstagio}"></span></p>
+            <div class="text-center mt-4">
+                <a th:href="@{/baixar-termo-estagio/{id}(id=${estagio.idEstagio})}" class="btn btn-primary">
+                    Baixar Termo de Estágio (PDF)
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
-<a th:href="@{/baixar-termo-estagio/{id}(id=${estagio.idEstagio})}">Baixar Termo de Estágio (PDF)</a>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
