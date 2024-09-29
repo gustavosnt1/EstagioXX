@@ -8,6 +8,7 @@
 </head>
 <body>
 <div class="container mt-5">
+    <button type="button" class="btn btn-secondary" onclick="window.history.back()">Voltar</button>
     <h2 class="text-center">Editar Empresa</h2>
     <form th:action="@{/coordenadores/empresas/atualizar}" th:object="${empresa}" method="POST">
         <input type="hidden" th:field="*{idEmpresa}" />
