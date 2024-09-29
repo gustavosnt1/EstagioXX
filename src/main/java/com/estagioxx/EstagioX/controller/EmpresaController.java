@@ -202,32 +202,6 @@ public class EmpresaController {
         return new ModelAndView("redirect:/empresas/listar-ofertas");
     }
 
-    @GetMapping("/estagios/{id}/termo")
-    public ModelAndView visualizarTermoEstagio(@PathVariable Long id) {
-        Estagio estagio = estagioService.findById(id);
-        if (estagio == null) {
-            throw new EntityNotFoundException("Estágio não encontrado para o ID: " + id);
-        }
-
-        ModelAndView mav = new ModelAndView("estagio/visualizar_termo");
-        mav.addObject("estagio", estagio);
-        return mav;
-    }
-
-    @GetMapping("/baixar-termo-estagio/{id}")
-    public ResponseEntity<byte[]> baixarTermoEstagio(@PathVariable Long id) {
-        Estagio estagio = estagioService.findById(id);
-        if (estagio == null) {
-            throw new EntityNotFoundException("Estágio não encontrado para o ID: " + id);
-        }
-
-        byte[] pdfBytes = estagioService.gerarTermoEstagioPDF(estagio);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("attachment", "termo_estagio_" + estagio.getIdEstagio() + ".pdf");
-        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
-    }
-
     @GetMapping("/logout")
     public ModelAndView logout() {
         httpSession.invalidate();
