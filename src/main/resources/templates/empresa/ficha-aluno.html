@@ -6,39 +6,53 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-    <h2>Ficha do Aluno</h2>
-    <table class="table table-striped">
-        <tr>
-            <th>ID:</th>
-            <td th:text="${aluno.idAluno}"></td>
-        </tr>
-        <tr>
-            <th>Nome:</th>
-            <td th:text="${aluno.nome}"></td>
-        </tr>
-        <tr>
-            <th>Sobrenome:</th>
-            <td th:text="${aluno.sobrenome}"></td>
-        </tr>
-        <tr>
-            <th>Username:</th>
-            <td th:text="${aluno.username}"></td>
-        </tr>
-        <tr>
-            <th>Faculdade:</th>
-            <td th:text="${aluno.faculdade}"></td>
-        </tr>
-        <tr>
-            <th>Telefone:</th>
-            <td th:text="${aluno.telefone}"></td>
-        </tr>
-        <tr>
-            <th>Habilidades:</th>
-            <td th:each="habilidade : ${aluno.habilidades}" th:text="${habilidade}">Habilidade</td>
-        </tr>
-    </table>
-    <a th:href="@{/empresas/dashboard}" class="btn btn-primary">Voltar ao Dashboard</a>
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Ficha do Aluno</h2>
+    <div class="card shadow">
+        <div class="card-body">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th>ID:</th>
+                    <td th:text="${aluno.idAluno}"></td>
+                </tr>
+                <tr>
+                    <th>Nome:</th>
+                    <td th:text="${aluno.nome}"></td>
+                </tr>
+                <tr>
+                    <th>Sobrenome:</th>
+                    <td th:text="${aluno.sobrenome}"></td>
+                </tr>
+                <tr>
+                    <th>Username:</th>
+                    <td th:text="${aluno.username}"></td>
+                </tr>
+                <tr>
+                    <th>Faculdade:</th>
+                    <td th:text="${aluno.faculdade}"></td>
+                </tr>
+                <tr>
+                    <th>Telefone:</th>
+                    <td th:text="${aluno.telefone}"></td>
+                </tr>
+                <tr>
+                    <th>Habilidades:</th>
+                    <td>
+                        <ul class="list-unstyled">
+                            <li th:each="habilidade : ${aluno.habilidades}" th:text="${habilidade}"></li>
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <a th:href="@{/empresas/dashboard}" class="btn btn-primary">Voltar ao Dashboard</a>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

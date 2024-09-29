@@ -9,49 +9,75 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-light">
 <!--<div th:replace="~{fragments/navbar-empresa :: navbar}"></div>-->
 <div class="container mt-5">
-    <h2 class="text-center">Criar Oferta de Estágio</h2>
-    <form th:action="@{/empresas/salvar-oferta}" th:object="${ofertaEstagio}" method="post">
-        <div class="mb-3">
-            <label for="atividadePrincipal" class="form-label">Atividade Principal</label>
-            <input type="text" class="form-control" id="atividadePrincipal" name="atividadePrincipal" placeholder="Digite a atividade principal">
-            <div th:if="${#fields.hasErrors('atividadePrincipal')}" class="alert alert-danger" th:errors="*{atividadePrincipal}"></div>
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Criar Oferta de Estágio</h2>
         </div>
-        <div class="mb-3">
-            <label for="chSemanal" class="form-label">Carga Horária Semanal</label>
-            <input type="text" class="form-control" id="chSemanal" name="chSemanal" placeholder="Digite a carga horária semanal" >
-            <div th:if="${#fields.hasErrors('chSemanal')}" class="alert alert-danger" th:errors="*{chSemanal}"></div>
+        <div class="card-body">
+            <button class="btn btn-outline-secondary mb-3" onclick="window.history.back()">
+                <i class="bi bi-arrow-left"></i> Voltar
+            </button>
+            <form th:action="@{/empresas/salvar-oferta}" th:object="${ofertaEstagio}" method="post">
+                <div class="mb-3">
+                    <label for="atividadePrincipal" class="form-label">Atividade Principal</label>
+                    <input type="text" class="form-control" id="atividadePrincipal" name="atividadePrincipal"
+                           placeholder="Digite a atividade principal">
+                    <div th:if="${#fields.hasErrors('atividadePrincipal')}" class="alert alert-danger mt-2"
+                         th:errors="*{atividadePrincipal}"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="chSemanal" class="form-label">Carga Horária Semanal</label>
+                    <input type="text" class="form-control" id="chSemanal" name="chSemanal"
+                           placeholder="Digite a carga horária semanal">
+                    <div th:if="${#fields.hasErrors('chSemanal')}" class="alert alert-danger mt-2"
+                         th:errors="*{chSemanal}"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="valorPago" class="form-label">Valor Pago</label>
+                        <input type="number" step="0.01" class="form-control" id="valorPago" name="valorPago"
+                               placeholder="Digite o valor pago">
+                        <div th:if="${#fields.hasErrors('valorPago')}" class="alert alert-danger mt-2"
+                             th:errors="*{valorPago}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="valeTransporte" class="form-label">Vale Transporte</label>
+                        <input type="number" step="0.01" class="form-control" id="valeTransporte" name="valeTransporte"
+                               placeholder="Digite o valor do vale transporte">
+                        <div th:if="${#fields.hasErrors('valeTransporte')}" class="alert alert-danger mt-2"
+                             th:errors="*{valeTransporte}"></div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="preRequisitos" class="form-label">Pré-Requisitos</label>
+                    <textarea class="form-control" id="preRequisitos" name="preRequisitos" rows="4"
+                              placeholder="Digite os pré-requisitos"></textarea>
+                    <div th:if="${#fields.hasErrors('preRequisitos')}" class="alert alert-danger mt-2"
+                         th:errors="*{preRequisitos}"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="habilidadesNecessaria" class="form-label">Habilidades Necessárias</label>
+                    <textarea class="form-control" id="habilidadesNecessaria" name="habilidadesNecessaria" rows="4"
+                              placeholder="Digite as habilidades necessárias"></textarea>
+                    <div th:if="${#fields.hasErrors('habilidadesNecessaria')}" class="alert alert-danger mt-2"
+                         th:errors="*{habilidadesNecessaria}"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="habilidadesDesejavel" class="form-label">Habilidades Desejáveis</label>
+                    <textarea class="form-control" id="habilidadesDesejavel" name="habilidadesDesejavel" rows="4"
+                              placeholder="Digite as habilidades desejáveis"></textarea>
+                    <div th:if="${#fields.hasErrors('habilidadesDesejavel')}" class="alert alert-danger mt-2"
+                         th:errors="*{habilidadesDesejavel}"></div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary w-100">Criar Oferta</button>
+                </div>
+            </form>
         </div>
-        <div class="mb-3">
-            <label for="valorPago" class="form-label">Valor Pago</label>
-            <input type="number" step="0.01" class="form-control" id="valorPago" name="valorPago" placeholder="Digite o valor pago" >
-            <div th:if="${#fields.hasErrors('valorPago')}" class="alert alert-danger" th:errors="*{valorPago}"></div>
-        </div>
-        <div class="mb-3">
-            <label for="valeTransporte" class="form-label">Vale Transporte</label>
-            <input type="number" step="0.01" class="form-control" id="valeTransporte" name="valeTransporte" placeholder="Digite o valor do vale transporte" >
-            <div th:if="${#fields.hasErrors('valeTransporte')}" class="alert alert-danger" th:errors="*{valeTransporte}"></div>
-        </div>
-        <div class="mb-3">
-            <label for="preRequisitos" class="form-label">Pré-Requisitos</label>
-            <textarea class="form-control" id="preRequisitos" name="preRequisitos" rows="4" placeholder="Digite os pré-requisitos" ></textarea>
-            <div th:if="${#fields.hasErrors('preRequisitos')}" class="alert alert-danger" th:errors="*{preRequisitos}"></div>
-        </div>
-        <div class="mb-3">
-            <label for="habilidadesNecessaria" class="form-label">Habilidades Necessárias</label>
-            <textarea class="form-control" id="habilidadesNecessaria" name="habilidadesNecessaria" rows="4" placeholder="Digite as habilidades necessárias" ></textarea>
-            <div th:if="${#fields.hasErrors('habilidadesNecessaria')}" class="alert alert-danger" th:errors="*{habilidadesNecessaria}"></div>
-
-        </div>
-        <div class="mb-3">
-            <label for="habilidadesDesejavel" class="form-label">Habilidades Desejáveis</label>
-            <textarea class="form-control" id="habilidadesDesejavel" name="habilidadesDesejavel" rows="4" placeholder="Digite as habilidades desejáveis" ></textarea>
-            <div th:if="${#fields.hasErrors('habilidadesDesejavel')}" class="alert alert-danger" th:errors="*{habilidadesDesejavel}"></div>
-        </div>
-        <button type="submit" class="btn btn-primary">Criar Oferta</button>
-    </form>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
