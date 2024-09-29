@@ -4,49 +4,64 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ofertas de Estágio</title>
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
+<!-- Navbar Fragment -->
 <div th:replace="~{fragments/navbar-aluno :: navbar(${nomeAluno})}"></div>
+
+<!-- Main Content -->
 <div class="container mt-5">
-  <h2>Ofertas de Estágio</h2>
+  <!-- Title and Search Form -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-primary">Ofertas de Estágio</h2>
+    <form class="d-flex" th:action="@{/alunos/ofertas}" method="get">
+      <input type="text" class="form-control me-2" name="query" placeholder="Pesquisar por atividade, valor, etc." th:value="${query}" />
+      <button type="submit" class="btn btn-outline-primary">
+        <i class="bi bi-search"></i> Pesquisar
+      </button>
+    </form>
+  </div>
 
-  <form th:action="@{/alunos/ofertas}" method="get">
-    <div class="mb-3">
-      <input type="text" class="form-control" name="query" placeholder="Pesquisar por atividade principal, valor pago, etc." th:value="${query}" />
-    </div>
-    <button type="submit" class="btn btn-primary">Pesquisar</button>
-  </form>
-
-  <table class="table">
-    <thead>
-    <tr>
-      <th>Atividade Principal</th>
-      <th>Pre-Requisitos</th>
-      <th>Carga Horaria Semanal</th>
-      <th>Valor Pago</th>
-      <th>Vale Transporte</th>
-      <th>Habilidades Desejavel</th>
-      <th>Habilidades Necessarias</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="oferta : ${ofertas}">
-      <td th:text="${oferta.atividadePrincipal}"></td>
-      <td th:text="${oferta.preRequisitos}"></td>
-      <td th:text="${oferta.chSemanal}"></td>
-      <td th:text="${oferta.valorPago}"></td>
-      <td th:text="${oferta.valeTransporte}"></td>
-      <td th:text="${oferta.habilidadesDesejavel}"></td>
-      <td th:text="${oferta.habilidadesNecessaria}"></td>
-      <td>
-        <a class="btn btn-primary" th:href="@{/alunos/candidatar(ofertaId=${oferta.idOfertaEstagio})}">Candidatar</a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+  <!-- Internship Offers Table -->
+  <div class="table-responsive shadow-sm rounded">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="table-primary">
+      <tr>
+        <th>Atividade Principal</th>
+        <th>Pré-Requisitos</th>
+        <th>Carga Horária Semanal</th>
+        <th>Valor Pago</th>
+        <th>Vale Transporte</th>
+        <th>Habilidades Desejáveis</th>
+        <th>Habilidades Necessárias</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="oferta : ${ofertas}">
+        <td th:text="${oferta.atividadePrincipal}"></td>
+        <td th:text="${oferta.preRequisitos}"></td>
+        <td th:text="${oferta.chSemanal} + ' horas'"></td>
+        <td th:text="${oferta.valorPago}"></td>
+        <td th:text="${oferta.valeTransporte}"> </td>
+        <td th:text="${oferta.habilidadesDesejavel}"></td>
+        <td th:text="${oferta.habilidadesNecessaria}"></td>
+        <td>
+          <!-- Call to Action Button -->
+          <a class="btn btn-success" th:href="@{/alunos/candidatar(ofertaId=${oferta.idOfertaEstagio})}">
+            <i class="bi bi-person-plus-fill"></i> Candidatar
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
