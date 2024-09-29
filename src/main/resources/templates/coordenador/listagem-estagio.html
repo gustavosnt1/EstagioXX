@@ -3,8 +3,11 @@
 <head>
   <title>Estágios em Andamento</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
 </head>
 <body>
+<div th:replace="~{fragments/navbar-coordenador :: navbar(${nomeCoordenador})}"></div>
 <div class="container mt-4">
   <h1 class="mb-4">Estágios em Andamento</h1>
   <table class="table table-bordered table-hover">
@@ -12,18 +15,22 @@
     <tr>
       <th>Aluno</th>
       <th>Oferta de Estágio</th>
+      <th>Atividade Principal</th>
       <th>Data de Início</th>
       <th>Data de Término</th>
       <th>Valor do Estágio (R$)</th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="estagio : ${estagios}">
       <td th:text="${estagio.aluno.nome} + ' ' + ${estagio.aluno.sobrenome}"></td>
       <td th:text="${estagio.ofertaEstagio.idOfertaEstagio}"></td>
+      <td th:text="${estagio.ofertaEstagio.atividadePrincipal}"></td>
       <td th:text="${estagio.dataInicio}"></td>
       <td th:text="${estagio.dataTermino}"></td>
       <td th:text="${estagio.valorEstagio}"></td>
+
     </tr>
     </tbody>
   </table>
