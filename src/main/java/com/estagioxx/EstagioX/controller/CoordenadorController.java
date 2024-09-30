@@ -9,10 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -138,30 +135,21 @@ public class CoordenadorController {
         return mav;
     }
 
-    @GetMapping("/estagios/{id}/termo")
-    public ModelAndView visualizarTermoEstagio(@PathVariable Long id) {
-        Estagio estagio = estagioService.findById(id);
-        if (estagio == null) {
-            throw new EntityNotFoundException("Estágio não encontrado para o ID: " + id);
+    @GetMapping("/baixar-termo-estagio/{estagioId}")
+    public ResponseEntity<byte[]> baixarTermoEstagio(@PathVariable Long estagioId) {
+        Estagio estagio = estagioService.findById(estagioId);
+        System.out.println(estagioId);
+        if (estagio == null || estagio.getTermoEstagio() == null) {
+            return ResponseEntity.notFound().build();
         }
 
-        ModelAndView mav = new ModelAndView("estagio/visualizar_termo");
-        mav.addObject("estagio", estagio);
-        return mav;
-    }
-
-    @GetMapping("/baixar-termo-estagio/{id}")
-    public ResponseEntity<byte[]> baixarTermoEstagio(@PathVariable Long id) {
-        Estagio estagio = estagioService.findById(id);
-        if (estagio == null) {
-            throw new EntityNotFoundException("Estágio não encontrado para o ID: " + id);
-        }
-
-        byte[] pdfBytes = estagioService.gerarTermoEstagioPDF(estagio);
+        byte[] termoEstagio = estagio.getTermoEstagio();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("attachment", "termo_estagio_" + estagio.getIdEstagio() + ".pdf");
-        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+        headers.setContentDisposition(ContentDisposition.builder("attachment")
+                .filename("termo_estagio_" + estagioId + ".pdf").build());
+
+        return new ResponseEntity<>(termoEstagio, headers, HttpStatus.OK);
     }
 
     @GetMapping("/logout")

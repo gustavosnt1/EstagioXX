@@ -33,6 +33,10 @@ public class Estagio implements Serializable {
     @Column(name = "valorEstagio", nullable = false)
     private double valorEstagio;
 
+    @Lob
+    @Column(name = "termoEstagio")
+    private byte[] termoEstagio;
+
 
     public Long getIdEstagio() {
         return idEstagio;
@@ -80,5 +84,13 @@ public class Estagio implements Serializable {
 
     public void setValorEstagio(double valorEstagio) {
         this.valorEstagio = valorEstagio;
+    }
+
+    public byte[] getTermoEstagio() {
+        return termoEstagio;
+    }
+
+    public void setTermoEstagio(byte[] termoEstagio) {
+        this.termoEstagio = termoEstagio;
     }
 }

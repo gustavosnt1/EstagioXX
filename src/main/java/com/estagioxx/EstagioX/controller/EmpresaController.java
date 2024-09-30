@@ -190,6 +190,10 @@ public class EmpresaController {
             estagio.setDataTermino(dataTermino);
             estagio.setValorEstagio(valorEstagio);
 
+            byte[] termoEstagio = estagioService.gerarTermoEstagio(estagio);
+            estagio.setTermoEstagio(termoEstagio);
+            estagioService.save(estagio);
+
             estagioService.save(estagio);
 
             OfertaEstagio ofertaEstagio = candidatura.getOfertaEstagio();
