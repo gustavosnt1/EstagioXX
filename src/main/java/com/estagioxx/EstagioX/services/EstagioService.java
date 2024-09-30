@@ -41,17 +41,45 @@ public class EstagioService {
             Document document = new Document(pdf);
 
 
-            document.add(new Paragraph("Termo de Estágio"));
-            document.add(new Paragraph("Nome do Aluno: " + estagio.getAluno().getNome()));
+
+            document.add(new Paragraph("TERMO DE COMPROMISSO DE ESTÁGIO").setBold().setFontSize(16));
+
+
+            document.add(new Paragraph("Empresa Concedente:").setBold());
+
+            document.add(new Paragraph("Nome: " + estagio.getOfertaEstagio().getEmpresas().getNome()));
+            document.add(new Paragraph("CNPJ: " + estagio.getOfertaEstagio().getEmpresas().getCnpj()));
+            document.add(new Paragraph("Endereço: " + estagio.getOfertaEstagio().getEmpresas().getEndereco()));
+            document.add(new Paragraph("Telefone: " + estagio.getOfertaEstagio().getEmpresas().getTelefone()));
+            document.add(new Paragraph("Pessoa Contato: " + estagio.getOfertaEstagio().getEmpresas().getPessoaContato()));
+
+
+            document.add(new Paragraph("Estagiário:").setBold());
+
+            document.add(new Paragraph("Nome: " + estagio.getAluno().getNome() + " " + estagio.getAluno().getSobrenome()));
+            document.add(new Paragraph("Instituição de Ensino: " + estagio.getAluno().getFaculdade()));
+
+
+            document.add(new Paragraph("Condições do Estágio:").setBold());
+
             document.add(new Paragraph("Atividade Princial do Estágio: " + estagio.getOfertaEstagio().getAtividadePrincipal()));
             document.add(new Paragraph("Data de Início: " + estagio.getDataInicio().toString()));
             document.add(new Paragraph("Data de Término: " + estagio.getDataTermino().toString()));
-            document.add(new Paragraph("Valor do Estágio: " + estagio.getValorEstagio()));
-            document.add(new Paragraph("NomeEmpresa: " + estagio.getOfertaEstagio().getEmpresas().getNome()));
+            document.add(new Paragraph("Remuneração: O estagiário receberá uma bolsa-auxílio de R$ " + estagio.getValorEstagio() + " por mês."));
+
+
+            document.add(new Paragraph("Obrigações:").setBold());
+            document.add(new Paragraph("Estagiário: Cumprir a carga horária e atividades definidas, manter confidencialidade das informações, e respeitar o código de conduta da empresa."));
+            document.add(new Paragraph("Empresa: Prover os recursos necessários para a realização do estágio, acompanhar o desenvolvimento do estagiário e fornecer avaliação periódica."));
+
+
+            document.add(new Paragraph("Assinaturas:").setBold());
+            document.add(new Paragraph(estagio.getOfertaEstagio().getEmpresas().getPessoaContato() + "\nEmpresa Concedente"));
+            document.add(new Paragraph(estagio.getAluno().getNome() + " " + estagio.getAluno().getSobrenome() + "\nEstagiário"));
 
 
 
-            // Feche o documento
+
             document.close();
         } catch (Exception e) {
             e.printStackTrace();
