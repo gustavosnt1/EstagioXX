@@ -60,9 +60,14 @@ public class CoordenadorController {
 
     @PostMapping("/autenticar")
     public ModelAndView autenticar(@ModelAttribute Coordenador coordenador) {
-        Coordenador coordenadorAutenticado = coordenadorService.authenticate(coordenador.getUsername(), coordenador.getPassword());
+        boolean isAuthenticated = coordenadorService.authenticate(coordenador.getUsername(), coordenador.getPassword());
 
-        if (coordenadorAutenticado != null) {
+        if (isAuthenticated) {
+
+            Coordenador coordenadorAutenticado = coordenadorService.findByUsername(coordenador.getUsername());
+            System.out.println("Coordenador autenticado: " + coordenadorAutenticado);
+
+
             httpSession.setAttribute("coordenador", coordenadorAutenticado);
             return new ModelAndView("redirect:/coordenadores/dashboard");
         } else {
