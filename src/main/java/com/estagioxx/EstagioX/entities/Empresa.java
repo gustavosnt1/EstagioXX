@@ -3,11 +3,10 @@ package com.estagioxx.EstagioX.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_empresas")
@@ -30,6 +29,10 @@ public class Empresa implements Serializable {
     @NotBlank(message = "O e-mail não pode estar vazio.")
     @Column(name = "emailEmpresa", nullable = false)
     private String email;
+
+    @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres.")
+    @Column(name = "passwordEmpresa",nullable = false)
+    private String password;
 
     @Pattern(regexp = "^\\d{10,11}$", message = "O telefone deve conter entre 10 a 11 dígitos.")
     @Column(name = "telefoneEmpresa", nullable = false)
@@ -117,6 +120,14 @@ public class Empresa implements Serializable {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getEndereco() {
         return endereco;
     }
@@ -156,6 +167,7 @@ public class Empresa implements Serializable {
     public void setPdfEmpresa(byte[] pdfEmpresa) {
         this.pdfEmpresa = pdfEmpresa;
     }
+
 
     @Override
     public boolean equals(Object o) {

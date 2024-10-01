@@ -1,10 +1,7 @@
 package com.estagioxx.EstagioX.services;
 
 
-import com.estagioxx.EstagioX.entities.Candidatura;
-import com.estagioxx.EstagioX.entities.Empresa;
-import com.estagioxx.EstagioX.entities.Estagio;
-import com.estagioxx.EstagioX.entities.OfertaEstagio;
+import com.estagioxx.EstagioX.entities.*;
 import com.estagioxx.EstagioX.repositories.CandidaturaRepository;
 import com.estagioxx.EstagioX.repositories.EmpresaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +22,6 @@ public class EmpresaService {
     @Autowired
     private EstagioService estagioService;
 
-    @Autowired
-    private OfertaEstagioService ofertaEstagioService;
-
     public List<Empresa> findAll() {
         return empresaRepository.findAll();
     }
@@ -45,13 +39,13 @@ public class EmpresaService {
         return empresaRepository.save(empresa);
     }
 
-    public boolean authenticate(String email) {
+    public boolean authenticate(String email, String password) {
         Optional<Empresa> empresaOptional = empresaRepository.findByEmail(email);
 
 
         if (empresaOptional.isPresent()) {
             Empresa empresa = empresaOptional.get();
-            return empresa.getEmail().equals(email);
+            return empresa.getPassword().equals(password);
         }
 
         return false;

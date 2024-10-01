@@ -78,7 +78,7 @@ public class EmpresaController {
 
     @PostMapping("/autenticar")
     public ModelAndView autenticar(@ModelAttribute Empresa empresa) {
-        boolean isAuthenticated = empresaService.authenticate(empresa.getEmail());
+        boolean isAuthenticated = empresaService.authenticate(empresa.getEmail(), empresa.getPassword());
 
         if (isAuthenticated) {
             Empresa empresaAutenticada = empresaService.findByEmail(empresa.getEmail());
