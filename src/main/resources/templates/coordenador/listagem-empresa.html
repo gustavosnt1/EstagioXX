@@ -6,7 +6,6 @@
     <title>Listagem de Empresas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
 </head>
 <body>
 <div th:replace="~{fragments/navbar-coordenador :: navbar(${nomeCoordenador})}"></div>
@@ -27,7 +26,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="empresa : ${empresas}">
+        <tr th:each="empresa : ${empresas.content}">
             <td th:text="${empresa.nome}"></td>
             <td th:text="${empresa.cnpj}"></td>
             <td th:text="${empresa.email}"></td>
@@ -42,6 +41,17 @@
         </tr>
         </tbody>
     </table>
+    <!-- Navegação de Paginação -->
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${empresas.hasPrevious()} ? '': 'disabled'">
+                <a class="page-link" th:href="@{/listar-empresas(page=${empresas.number - 1}, size=${empresas.size})}">Anterior</a>
+            </li>
+            <li class="page-item" th:classappend="${empresas.hasNext()} ? '': 'disabled'">
+                <a class="page-link" th:href="@{/listar-empresas(page=${empresas.number + 1}, size=${empresas.size})}">Próximo</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
