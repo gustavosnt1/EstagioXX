@@ -3,6 +3,8 @@ package com.estagioxx.EstagioX.services;
 import com.estagioxx.EstagioX.entities.*;
 import com.estagioxx.EstagioX.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +20,9 @@ public class CoordenadorService {
 
     @Autowired
     private CandidaturaRepository candidaturaRepository;
+
+    @Autowired
+    private EstagioRepository estagioRepository;
 
     @Autowired
     private EstagioService estagioService;
@@ -46,8 +51,8 @@ public class CoordenadorService {
         return candidaturaRepository.findByOfertaEstagio_IdOfertaEstagio(ofertaId);
     }
 
-    public List<Estagio> listarEstagios() {
-        return estagioService.listarEstagios();
+    public Page<Estagio> listarEstagios(Pageable pageable){
+        return estagioRepository.findAll(pageable);
     }
 
     public Coordenador findByUsername(String username) {

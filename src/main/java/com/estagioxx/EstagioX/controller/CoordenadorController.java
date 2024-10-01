@@ -132,15 +132,13 @@ public class CoordenadorController {
     }
 
     @GetMapping("/listar-estagios")
-    public ModelAndView listarEstagios() {
-        Coordenador coordenador = (Coordenador) httpSession.getAttribute("coordenador");
-
-        List<Estagio> estagios = coordenadorService.listarEstagios();
+    public ModelAndView listarEstagios(@RequestParam(defaultValue = "0") int page,
+                                       @RequestParam(defaultValue = "10") int size){
+        Page<Estagio> estagios = coordenadorService.listarEstagios(PageRequest.of(page, size));
         ModelAndView mav = new ModelAndView("coordenador/listagem-estagio");
 
-        mav.addObject("estagios", estagios);
-        mav.addObject("nomeCoordenador", coordenador.getNome());
-
+        mav.addObject("estagios", estagios.getContent());
+        mav.addObject("page", estagios);
         return mav;
     }
 

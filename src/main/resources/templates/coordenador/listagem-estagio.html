@@ -4,7 +4,6 @@
   <title>Estágios em Andamento</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
 </head>
 <body>
 <div th:replace="~{fragments/navbar-coordenador :: navbar(${nomeCoordenador})}"></div>
@@ -38,8 +37,22 @@
     </tr>
     </tbody>
   </table>
-</div>
+  <nav>
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${page.hasPrevious()} ? '': 'disabled'">
+        <a class="page-link" th:href="@{/listar-estagios(page=${page.number - 1}, size=${page.size})}">Anterior</a>
+      </li>
+      <li class="page-item" th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
+          th:classappend="${i == page.number} ? 'active'">
+        <a class="page-link" th:href="@{/listar-estagios(page=${i}, size=${page.size})}" th:text="${i + 1}"></a>
+      </li>
+      <li class="page-item" th:classappend="${page.hasNext()} ? '' : 'disabled'">
+        <a class="page-link" th:href="@{/listar-estagios(page=${page.number + 1}, size=${page.size})}">Próximo</a>
+      </li>
+      </ul>
+    </nav>
 
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
