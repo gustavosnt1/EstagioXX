@@ -33,6 +33,11 @@
           <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email inválido</div>
         </div>
         <div class="mb-3">
+          <label for="password" class="form-label">Senha</label>
+          <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Digite uma senha" >
+          <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Senha inválida</div>
+        </div>
+        <div class="mb-3">
           <label for="telefone" class="form-label">Telefone</label>
           <input type="text" class="form-control" id="telefone" th:field="*{telefone}" placeholder="Digite seu telefone." >
           <div class="text-danger" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}">Telefone inválido</div>
