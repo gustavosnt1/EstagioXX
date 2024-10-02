@@ -126,12 +126,21 @@ public class CoordenadorController {
 
     @PostMapping("/empresas/atualizar")
     public ModelAndView atualizar(@RequestParam("idEmpresa") Long id,
-                                  @Valid @ModelAttribute Empresa empresa,
+                                  @Valid @ModelAttribute("empresa") Empresa empresa,
+                                  BindingResult bindingResult,
                                   @RequestParam(value = "pdfEmpresa", required = false) MultipartFile pdfEmpresa) throws IOException {
+        if (bindingResult.hasErrors()) {
+            ModelAndView mav = new ModelAndView("coordenador/editar-empresa");
+            mav.addObject("empresa", empresa);
+            return mav;
+        }
+
         if (pdfEmpresa != null && !pdfEmpresa.isEmpty()) {
             empresa.setPdfEmpresa(pdfEmpresa.getBytes());
         }
+
         empresaService.update(id, empresa);
+
         return new ModelAndView("redirect:/coordenadores/dashboard");
     }
 

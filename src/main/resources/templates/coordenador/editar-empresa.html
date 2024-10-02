@@ -16,37 +16,61 @@
         <div class="card-body">
             <form th:action="@{/coordenadores/empresas/atualizar}" th:object="${empresa}" method="POST">
                 <input type="hidden" th:field="*{idEmpresa}" />
+                <div th:if="${#fields.hasErrors('nome')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('nome')}" th:text="${err}"></p>
+                </div>
                 <div class="mb-3">
                     <label for="nome" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="nome" th:field="*{nome}" placeholder="Digite o nome da empresa." required>
+                    <input type="text" class="form-control" id="nome" th:field="*{nome}" placeholder="Digite o nome da empresa.">
+                </div>
+                <div th:if="${#fields.hasErrors('cnpj')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('cnpj')}" th:text="${err}"></p>
                 </div>
                 <div class="mb-3">
                     <label for="cnpj" class="form-label">CNPJ</label>
-                    <input type="text" class="form-control" id="cnpj" th:field="*{cnpj}" placeholder="Digite o CNPJ da empresa." required>
+                    <input type="text" class="form-control" id="cnpj" th:field="*{cnpj}" placeholder="Digite o CNPJ da empresa." >
+                </div>
+                <div th:if="${#fields.hasErrors('email')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('email')}" th:text="${err}"></p>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Digite o e-mail da empresa." required>
+                    <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Digite o e-mail da empresa." >
+                </div>
+                <div th:if="${#fields.hasErrors('telefone')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('telefone')}" th:text="${err}"></p>
                 </div>
                 <div class="mb-3">
                     <label for="telefone" class="form-label">Telefone</label>
-                    <input type="text" class="form-control" id="telefone" th:field="*{telefone}" placeholder="Digite o telefone da empresa." required>
+                    <input type="text" class="form-control" id="telefone" th:field="*{telefone}" placeholder="Digite o telefone da empresa." >
+                </div>
+                <div th:if="${#fields.hasErrors('endereco')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('endereco')}" th:text="${err}"></p>
                 </div>
                 <div class="mb-3">
                     <label for="endereco" class="form-label">Endereço</label>
-                    <input type="text" class="form-control" id="endereco" th:field="*{endereco}" placeholder="Digite o endereço da empresa." required>
+                    <input type="text" class="form-control" id="endereco" th:field="*{endereco}" placeholder="Digite o endereço da empresa." >
+                </div>
+                <div th:if="${#fields.hasErrors('pessoaContato')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('pessoaContato')}" th:text="${err}"></p>
                 </div>
                 <div class="mb-3">
                     <label for="pessoaContato" class="form-label">Pessoa de Contato</label>
-                    <input type="text" class="form-control" id="pessoaContato" th:field="*{pessoaContato}" placeholder="Digite a pessoa de contato da empresa." required>
+                    <input type="text" class="form-control" id="pessoaContato" th:field="*{pessoaContato}" placeholder="Digite a pessoa de contato da empresa." >
+                </div>
+                <div th:if="${#fields.hasErrors('atividadePrincipal')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('atividadePrincipal')}" th:text="${err}"></p>
                 </div>
                 <div class="mb-3">
                     <label for="atividadePrincipal" class="form-label">Atividade Principal</label>
-                    <input type="text" class="form-control" id="atividadePrincipal" th:field="*{atividadePrincipal}" placeholder="Digite a atividade principal da empresa." required>
+                    <input type="text" class="form-control" id="atividadePrincipal" th:field="*{atividadePrincipal}" placeholder="Digite a atividade principal da empresa." >
+                </div>
+                <div th:if="${#fields.hasErrors('urlEmpresa')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('urlEmpresa')}" th:text="${err}"></p>
                 </div>
                 <div class="mb-3">
                     <label for="urlEmpresa" class="form-label">URL da Empresa</label>
-                    <input type="url" class="form-control" id="urlEmpresa" th:field="*{urlEmpresa}" placeholder="Digite a URL da empresa." required>
+                    <input type="url" class="form-control" id="urlEmpresa" th:field="*{urlEmpresa}" placeholder="Digite a URL da empresa." >
                 </div>
                 <div class="mb-3">
                     <label for="pdfEmpresa" class="form-label">Documento de Comprovação (PDF)</label>
