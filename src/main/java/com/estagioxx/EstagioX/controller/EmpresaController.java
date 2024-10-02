@@ -86,7 +86,7 @@ public class EmpresaController {
             return new ModelAndView("redirect:/empresas/dashboard");
         } else {
             ModelAndView mav = new ModelAndView("empresa/login");
-            mav.addObject("error", "Email inválido");
+            mav.addObject("error", "Email ou senha inválida");
             return mav;
         }
     }
