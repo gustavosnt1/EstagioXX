@@ -7,7 +7,8 @@ import com.estagioxx.EstagioX.entities.OfertaEstagio;
 import com.estagioxx.EstagioX.repositories.OfertaEstagioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -45,21 +46,14 @@ public class OfertaEstagioService {
     }
 
 
-    public List<OfertaEstagio> search(String query, Long alunoId) {
-        List<OfertaEstagio> todasOfertas = ofertaEstagioRepository.findAll();
-
+    public Page<OfertaEstagio> search(String query, Long alunoId, Pageable pageable) {
         List<Candidatura> candidaturas = candidaturaService.listarCandidaturasPorAluno(alunoId);
 
         Set<Long> ofertasCandidatas = candidaturas.stream()
                 .map(c -> c.getOfertaEstagio().getIdOfertaEstagio())
                 .collect(Collectors.toSet());
 
-        return todasOfertas.stream()
-                .filter(o -> !o.isPreenchida() && // Adiciona o filtro para ofertas preenchidas
-                        !ofertasCandidatas.contains(o.getIdOfertaEstagio()) &&
-                        (o.getAtividadePrincipal().toLowerCase().contains(query.toLowerCase()) ||
-                                String.valueOf(o.getValorPago()).contains(query)))
-                .collect(Collectors.toList());
+        return ofertaEstagioRepository.findByQueryAndExcludingCandidaturas(query, ofertasCandidatas, pageable);
     }
 
     public void delete(Long idOfertaEstagio) {
