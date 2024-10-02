@@ -2,6 +2,7 @@ package com.estagioxx.EstagioX.controller;
 
 
 import com.estagioxx.EstagioX.entities.*;
+import com.estagioxx.EstagioX.repositories.EmpresaRepository;
 import com.estagioxx.EstagioX.services.CoordenadorService;
 import com.estagioxx.EstagioX.services.EmpresaService;
 import com.estagioxx.EstagioX.services.EstagioService;
@@ -11,6 +12,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -99,13 +101,17 @@ public class CoordenadorController {
     }
 
     @GetMapping("/listar-empresas")
-    public ModelAndView listarEmpresas() {
+    public ModelAndView listarEmpresas(@RequestParam(defaultValue = "0") int page,
+                                       @RequestParam(defaultValue = "2") int size) {
         Coordenador coordenador = (Coordenador) httpSession.getAttribute("coordenador");
 
-        List<Empresa> empresas = empresaService.findAll();
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Empresa> empresasPage = empresaService.findAll(pageable);
+
         ModelAndView mav = new ModelAndView("coordenador/listagem-empresa");
-        mav.addObject("empresas", empresas);
+        mav.addObject("empresas", empresasPage.getContent());
         mav.addObject("nomeCoordenador", coordenador.getNome());
+        mav.addObject("empresasPage", empresasPage); // Adiciona a página de empresas para a view
 
         return mav;
     }

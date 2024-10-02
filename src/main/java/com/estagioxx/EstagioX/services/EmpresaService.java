@@ -6,6 +6,8 @@ import com.estagioxx.EstagioX.repositories.CandidaturaRepository;
 import com.estagioxx.EstagioX.repositories.EmpresaRepository;
 import com.estagioxx.EstagioX.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -75,6 +77,10 @@ public class EmpresaService {
 
     public List<Candidatura> listarCandidatosPorOferta(Long ofertaId) {
         return candidaturaRepository.findByOfertaEstagio_IdOfertaEstagio(ofertaId);
+    }
+
+    public Page<Empresa> findAll(Pageable pageable) {
+        return empresaRepository.findAll(pageable);
     }
 
 

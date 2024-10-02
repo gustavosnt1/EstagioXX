@@ -31,6 +31,8 @@ public class CoordenadorService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private EmpresaRepository empresaRepository;
 
     public Coordenador save(Coordenador coordenador) {
 
