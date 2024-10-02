@@ -106,8 +106,10 @@ public class EmpresaController {
 
     @GetMapping("/criar-oferta")
     public ModelAndView criarOferta() {
+        Empresa empresa = (Empresa) httpSession.getAttribute("empresa");
         ModelAndView mav = new ModelAndView("empresa/criar-oferta");
         mav.addObject("ofertaEstagio", new OfertaEstagio());
+        mav.addObject("empresa", empresa);
         return mav;
     }
 

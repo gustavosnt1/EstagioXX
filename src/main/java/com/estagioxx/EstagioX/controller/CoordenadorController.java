@@ -144,6 +144,12 @@ public class CoordenadorController {
         return new ModelAndView("redirect:/coordenadores/dashboard");
     }
 
+    @PostMapping("/empresas/bloquear/{id}")
+    public String bloquearEmpresa(@PathVariable Long id) {
+        empresaService.bloquearEmpresa(id);
+        return "redirect:/coordenadores/listar-empresas";
+    }
+
     @GetMapping("/listar-estagios")
     public ModelAndView listarEstagios( @RequestParam(defaultValue = "0") int page,
                                         @RequestParam(defaultValue = "5") int size) {

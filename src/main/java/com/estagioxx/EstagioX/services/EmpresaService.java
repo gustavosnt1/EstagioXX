@@ -5,6 +5,7 @@ import com.estagioxx.EstagioX.entities.*;
 import com.estagioxx.EstagioX.repositories.CandidaturaRepository;
 import com.estagioxx.EstagioX.repositories.EmpresaRepository;
 import com.estagioxx.EstagioX.repositories.RoleRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -107,6 +108,14 @@ public class EmpresaService {
         } else {
             throw new RuntimeException("Empresa não encontrada para o ID: " + id);
         }
+    }
+
+    public void bloquearEmpresa(Long id) {
+        Empresa empresa = empresaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Empresa não encontrada"));
+
+        empresa.setBloqueada(true); // Adicione um campo 'bloqueada' na sua entidade
+        empresaRepository.save(empresa);
     }
 }
 

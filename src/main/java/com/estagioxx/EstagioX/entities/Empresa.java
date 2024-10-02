@@ -58,6 +58,9 @@ public class Empresa implements Serializable {
     @Column(name = "urlEmpresa", nullable = false)
     private String urlEmpresa;
 
+    @Column(name = "bloqueada", nullable = false)
+    private boolean bloqueada = false;
+
 
     @Column(name = "pdfEmpresa", nullable = true)
     private byte[] pdfEmpresa;
@@ -181,6 +184,13 @@ public class Empresa implements Serializable {
         this.pdfEmpresa = pdfEmpresa;
     }
 
+    public boolean isBloqueada() {
+        return bloqueada;
+    }
+
+    public void setBloqueada(boolean bloqueada) {
+        this.bloqueada = bloqueada;
+    }
 
     @Override
     public boolean equals(Object o) {

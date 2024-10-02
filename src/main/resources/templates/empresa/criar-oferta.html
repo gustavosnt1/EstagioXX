@@ -20,7 +20,10 @@
             <button class="btn btn-outline-secondary mb-3" onclick="window.history.back()">
                 <i class="bi bi-arrow-left"></i> Voltar
             </button>
-            <form th:action="@{/empresas/salvar-oferta}" th:object="${ofertaEstagio}" method="post">
+            <div th:if="${empresa.bloqueada}" class="alert alert-danger text-center">
+                Você não pode criar ofertas de estágio porque sua conta está bloqueada.
+            </div>
+            <form th:action="@{/empresas/salvar-oferta}" th:object="${ofertaEstagio}" method="post" th:if="${!empresa.bloqueada}">
                 <div class="mb-3">
                     <label for="atividadePrincipal" class="form-label">Atividade Principal</label>
                     <input type="text" class="form-control" id="atividadePrincipal" name="atividadePrincipal"

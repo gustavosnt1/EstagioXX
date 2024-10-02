@@ -38,6 +38,8 @@
             <td th:text="${empresa.urlEmpresa}"></td>
             <td>
                 <a class="btn btn-primary" th:href="@{/coordenadores/empresas/editar/{id}(id=${empresa.idEmpresa})}">Editar</a>
+                <form th:action="@{/coordenadores/empresas/bloquear/{id}(id=${empresa.idEmpresa})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Bloquear</button></form>
             </td>
         </tr>
         </tbody>
