@@ -9,6 +9,8 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -128,13 +130,16 @@ public class CoordenadorController {
     }
 
     @GetMapping("/listar-estagios")
-    public ModelAndView listarEstagios() {
+    public ModelAndView listarEstagios( @RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(defaultValue = "5") int size) {
         Coordenador coordenador = (Coordenador) httpSession.getAttribute("coordenador");
 
-        List<Estagio> estagios = coordenadorService.listarEstagios();
+        Page<Estagio> estagiosPage = coordenadorService.listarEstagios(PageRequest.of(page, size));
         ModelAndView mav = new ModelAndView("coordenador/listagem-estagio");
 
-        mav.addObject("estagios", estagios);
+        mav.addObject("estagios", estagiosPage.getContent());
+        mav.addObject("totalPages", estagiosPage.getTotalPages());
+        mav.addObject("currentPage", page);
         mav.addObject("nomeCoordenador", coordenador.getNome());
 
         return mav;

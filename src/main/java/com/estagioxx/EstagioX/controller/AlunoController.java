@@ -52,6 +52,7 @@ public class AlunoController {
             mav.addObject("habilidades", Arrays.asList("Programação Python", "Design em CSS", "Especialista em UX", "Programador de Testes"));
             return mav;
         }
+
         alunoService.save(aluno);
         return new ModelAndView("redirect:/alunos/login");
     }

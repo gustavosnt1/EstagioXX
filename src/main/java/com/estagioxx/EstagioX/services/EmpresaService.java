@@ -4,7 +4,9 @@ package com.estagioxx.EstagioX.services;
 import com.estagioxx.EstagioX.entities.*;
 import com.estagioxx.EstagioX.repositories.CandidaturaRepository;
 import com.estagioxx.EstagioX.repositories.EmpresaRepository;
+import com.estagioxx.EstagioX.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +23,11 @@ public class EmpresaService {
 
     @Autowired
     private EstagioService estagioService;
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<Empresa> findAll() {
         return empresaRepository.findAll();
@@ -36,19 +43,30 @@ public class EmpresaService {
     }
 
     public Empresa save(Empresa empresa) {
+        String encodedPassword = passwordEncoder.encode(empresa.getPassword());
+        empresa.setPassword(encodedPassword); // Definir a senha criptografada
+        Role roleEmpresa = roleRepository.findByName("ROLE_EMPRESA");
+        empresa.setRole(roleEmpresa);
         return empresaRepository.save(empresa);
     }
 
-    public boolean authenticate(String email, String password) {
-        Optional<Empresa> empresaOptional = empresaRepository.findByEmail(email);
-
+    public boolean authenticate(String username, String password) {
+        System.out.println("Tentando autenticar usuário: " + username);
+        Optional<Empresa> empresaOptional = empresaRepository.findByEmail(username);
 
         if (empresaOptional.isPresent()) {
             Empresa empresa = empresaOptional.get();
-            return empresa.getPassword().equals(password);
+            // Utilize passwordEncoder para comparar a senha
+            boolean passwordMatches = passwordEncoder.matches(password, empresa.getPassword());
+            if (passwordMatches) {
+                return true; // Senha correta
+            } else {
+                System.out.println("Senha incorreta para o usuário: " + username);
+            }
+        } else {
+            System.out.println("Usuário não encontrado: " + username);
         }
-
-        return false;
+        return false; // Retorna false se o usuário não existir ou a senha estiver incorreta
     }
 
     public Empresa findByEmail(String email) {
