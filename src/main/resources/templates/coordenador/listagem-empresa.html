@@ -47,6 +47,10 @@
             <li class="page-item" th:classappend="${empresas.hasPrevious()} ? '': 'disabled'">
                 <a class="page-link" th:href="@{/listar-empresas(page=${empresas.number - 1}, size=${empresas.size})}">Anterior</a>
             </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, empresas.totalPages - 1)}"
+                th:classappend="${i == empresas.number} ? 'active'">
+                <a class="page-link" th:href="@{/listar-empresas(page=${i}, size=${empresas.size})}" th:text="${i + 1}"></a>
+            </li>
             <li class="page-item" th:classappend="${empresas.hasNext()} ? '': 'disabled'">
                 <a class="page-link" th:href="@{/listar-empresas(page=${empresas.number + 1}, size=${empresas.size})}">Próximo</a>
             </li>
