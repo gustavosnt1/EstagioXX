@@ -43,18 +43,22 @@
     </tr>
     </tbody>
   </table>
-  <div>
-    <span th:text="'Página ' + ${currentPage + 1} + ' de ' + ${totalPages}"></span>
-    <ul>
-      <li th:if="${currentPage > 0}">
-        <a th:href="@{/listar-ofertas(page=${currentPage - 1}, size=${size})}">Anterior</a>
+</div>
+  <div class="mt-4 d-flex justify-content-center align-items-center">
+    <div class="text-center">
+      <span class="text-muted" th:text="'Página ' + ${currentPage + 1} + ' de ' + ${totalPages}"></span>
+    </div>
+    <ul class="pagination mt-2">
+      <li class="page-item" th:if="${currentPage > 0}">
+        <a class="page-link" th:href="@{/empresas/listar-ofertas(page=${currentPage - 1}, size=${size})}">Anterior</a>
       </li>
-      <li th:if="${currentPage < totalPages - 1}">
-        <a th:href="@{/listar-ofertas(page=${currentPage + 1}, size=${size})}">Próxima</a>
+      <li class="page-item" th:if="${currentPage < totalPages - 1}">
+        <a class="page-link" th:href="@{/empresas/listar-ofertas(page=${currentPage + 1}, size=${size})}">Próxima</a>
       </li>
     </ul>
   </div>
-</div>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
