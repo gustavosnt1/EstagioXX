@@ -91,4 +91,8 @@ public class CoordenadorService {
     public Coordenador findByUsername(String username) {
         return coordenadorRepository.findByUsername(username).orElse(null);
     }
+
+    public Page<OfertaEstagio> listarTodasOfertasPaginadas(Pageable pageable) {
+        return ofertaEstagioRepository.findAll(pageable);
+    }
 }

@@ -81,13 +81,28 @@ public class CoordenadorController {
         }
     }
 
-    @GetMapping("/dashboard")
+/*    @GetMapping("/dashboard")
     public ModelAndView mostrarDashboard() {
         Coordenador coordenador = (Coordenador) httpSession.getAttribute("coordenador");
 
         List<OfertaEstagio> ofertas = coordenadorService.listarTodasOfertas();
         ModelAndView mav = new ModelAndView("coordenador/dashboard");
         mav.addObject("ofertas", ofertas);
+        mav.addObject("nomeCoordenador", coordenador.getNome());
+        return mav;
+    }*/
+
+    @GetMapping("/dashboard")
+    public ModelAndView mostrarDashboard(@RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "2") int size) {
+        Coordenador coordenador = (Coordenador) httpSession.getAttribute("coordenador");
+
+        Page<OfertaEstagio> ofertasPaginadas = coordenadorService.listarTodasOfertasPaginadas(PageRequest.of(page, size));
+
+        ModelAndView mav = new ModelAndView("coordenador/dashboard");
+        mav.addObject("ofertas", ofertasPaginadas.getContent()); // Ofertas da página atual
+        mav.addObject("totalPages", ofertasPaginadas.getTotalPages()); // Total de páginas
+        mav.addObject("currentPage", ofertasPaginadas.getNumber()); // Página atual
         mav.addObject("nomeCoordenador", coordenador.getNome());
         return mav;
     }
