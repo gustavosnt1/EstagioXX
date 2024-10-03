@@ -27,7 +27,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/home", "/auth/login", "/alunos/cadastrar", "/alunos/salvar", "/alunos/login", "alunos/autenticar",
+                        .requestMatchers("/home", "/auth/login","/alunos/cadastrar", "/alunos/salvar", "/alunos/login", "alunos/autenticar",
                                 "/coordenadores/cadastrar", "/coordenadores/salvar", "/coordenadores/login", "coordenadores/autenticar",
                                 "/empresas/cadastrar", "/empresas/salvar", "empresas/login", "empresas/autenticar")
                         .permitAll()
@@ -45,6 +45,8 @@ public class SecurityConfig {
                 .logout((logout) -> logout
                         .logoutUrl("/auth/logout")
                         .logoutSuccessUrl("/auth/login")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
                         .permitAll()
                 );
 

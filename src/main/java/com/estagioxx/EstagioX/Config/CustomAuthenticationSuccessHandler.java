@@ -29,7 +29,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     protected String determineTargetUrl(Authentication authentication) {
         if (authentication == null) {
-            return "/home"; // Valor padrão se a autenticação for nula
+            return "/home";
         }
 
         System.out.println("Verificando papéis do usuário autenticado...");
@@ -43,6 +43,6 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             return "/coordenadores/dashboard";
         }
 
-        return "/home"; // Valor padrão se não encontrar o papel
+        return "/home";
     }
 }

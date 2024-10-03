@@ -29,18 +29,18 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("Tentativa de login com username/email: " + username);
 
-        // 1. Procurar no repositório de Aluno
+
         Aluno aluno = alunoRepository.findByUsername(username).orElse(null);
         if (aluno != null) {
             System.out.println("Usuário encontrado no repositório de Aluno: " + aluno.getUsername());
             return User.builder()
                     .username(aluno.getUsername())
-                    .password(aluno.getPassword())  // Assumindo que a senha já está criptografada
-                    .roles("ALUNO")  // Defina a role de acordo com o tipo de usuário
+                    .password(aluno.getPassword())
+                    .roles("ALUNO")
                     .build();
         }
 
-        // 2. Procurar no repositório de Empresa
+
         Empresa empresa = empresaRepository.findByEmail(username).orElse(null);
         if (empresa != null) {
             System.out.println("Usuário encontrado no repositório de Empresa: " + empresa.getEmail());
@@ -51,7 +51,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                     .build();
         }
 
-        // 3. Procurar no repositório de Coordenador
+
         Coordenador coordenador = coordenadorRepository.findByUsername(username).orElse(null);
         if (coordenador != null) {
             System.out.println("Usuário encontrado no repositório de Coordenador: " + coordenador.getUsername());
@@ -63,7 +63,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                     .build();
         }
 
-        // Caso o usuário não seja encontrado, lançar exceção
+
         System.out.println("Usuário não encontrado: " + username);
         throw new UsernameNotFoundException("Usuário não encontrado: " + username);
     }
