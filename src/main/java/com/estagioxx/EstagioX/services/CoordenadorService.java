@@ -24,8 +24,6 @@ public class CoordenadorService {
     @Autowired
     private EstagioRepository estagioRepository;
 
-    @Autowired
-    private EstagioRepository estagioRepository;
 
     @Autowired
     private EstagioService estagioService;
@@ -34,8 +32,7 @@ public class CoordenadorService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    private EmpresaRepository empresaRepository;
+
 
     public Coordenador save(Coordenador coordenador) {
 
@@ -60,17 +57,17 @@ public class CoordenadorService {
 
         if (coordenadorOptional.isPresent()) {
             Coordenador coordenador = coordenadorOptional.get();
-            // Utilize passwordEncoder para comparar a senha
+
             boolean passwordMatches = passwordEncoder.matches(password, coordenador.getPassword());
             if (passwordMatches) {
-                return true; // Senha correta
+                return true;
             } else {
                 System.out.println("Senha incorreta para o usuário: " + username);
             }
         } else {
             System.out.println("Usuário não encontrado: " + username);
         }
-        return false; // Retorna false se o usuário não existir ou a senha estiver incorreta
+        return false;
     }
 
 
@@ -83,10 +80,6 @@ public class CoordenadorService {
         return candidaturaRepository.findByOfertaEstagio_IdOfertaEstagio(ofertaId);
     }
 
-
-    /*public List<Estagio> listarEstagios() {
-        return estagioService.listarEstagios();
-    }*/
 
     public Page<Estagio> listarEstagios(Pageable pageable) {
         return estagioRepository.findAll(pageable);

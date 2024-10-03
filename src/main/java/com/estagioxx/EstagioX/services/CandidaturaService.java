@@ -1,8 +1,6 @@
 package com.estagioxx.EstagioX.services;
 
-import com.estagioxx.EstagioX.entities.Aluno;
 import com.estagioxx.EstagioX.entities.Candidatura;
-import com.estagioxx.EstagioX.entities.OfertaEstagio;
 import com.estagioxx.EstagioX.repositories.CandidaturaRepository;
 import com.estagioxx.EstagioX.repositories.OfertaEstagioRepository;
 import org.springframework.beans.factory.annotation.Autowired;

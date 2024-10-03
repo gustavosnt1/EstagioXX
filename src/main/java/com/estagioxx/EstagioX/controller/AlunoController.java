@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static java.util.Locale.filter;
+
 
 @Controller
 @RequestMapping ("/alunos")
@@ -77,7 +77,6 @@ public class AlunoController {
             Aluno alunoAutenticado = alunoService.findByUsername(aluno.getUsername());
             System.out.println("Aluno autenticado: " + alunoAutenticado);
 
-            // Armazenar o aluno na sessão
             httpSession.setAttribute("aluno", alunoAutenticado);
             return new ModelAndView("redirect:/alunos/dashboard");
         } else {
@@ -101,19 +100,21 @@ public class AlunoController {
     }
 
     @GetMapping("/ofertas")
-    public ModelAndView listarOfertas(@RequestParam(value = "query", required = false) String query,
-                                      @PageableDefault(size = 10) Pageable pageable){
+    public ModelAndView listarOfertas(@RequestParam(value = "query", required = false) String query) {
         Aluno aluno = (Aluno) httpSession.getAttribute("aluno");
 
         if (aluno == null) {
             return new ModelAndView("redirect:/alunos/login");
         }
 
-        Page<OfertaEstagio> ofertasDisponiveis;
+        List<OfertaEstagio> ofertasDisponiveis;
 
         if (query != null && !query.isEmpty()) {
 
-            ofertasDisponiveis = ofertaEstagioService.search(query, aluno.getIdAluno(), pageable);
+            ofertasDisponiveis = ofertaEstagioService.search(query, aluno.getIdAluno())
+                    .stream()
+                    .filter(o -> !o.isPreenchida())
+                    .collect(Collectors.toList());
         } else {
             List<Candidatura> candidaturas = candidaturaService.listarCandidaturasPorAluno(aluno.getIdAluno());
 
@@ -121,15 +122,10 @@ public class AlunoController {
                     .map(c -> c.getOfertaEstagio().getIdOfertaEstagio())
                     .collect(Collectors.toSet());
 
-            List<OfertaEstagio> todasOfertas = ofertaEstagioService.findAll();
-
-            List<OfertaEstagio> filtradas = todasOfertas.stream()
+            ofertasDisponiveis = ofertaEstagioService.findAll().stream()
+                    .filter(o -> !o.isPreenchida())
                     .filter(o -> !ofertasCandidatas.contains(o.getIdOfertaEstagio()))
                     .collect(Collectors.toList());
-
-            int start = (int) pageable.getOffset();
-            int end = Math.min((start + pageable.getPageSize()), filtradas.size());
-            ofertasDisponiveis = new PageImpl<>(filtradas.subList(start, end), pageable, filtradas.size());
         }
 
         ModelAndView mav = new ModelAndView("aluno/listar-ofertas");
@@ -171,7 +167,6 @@ public class AlunoController {
         }
 
         List<Candidatura> candidaturas = candidaturaService.listarCandidaturasPorAluno(aluno.getIdAluno());
-        System.out.println("Candidaturas: " + candidaturas);
 
         for (Candidatura c : candidaturas) {
             System.out.println("Candidatura Status: " + c.getStatus());

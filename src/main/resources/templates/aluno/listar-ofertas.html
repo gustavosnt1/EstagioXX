@@ -59,19 +59,6 @@
       </tbody>
     </table>
   </div>
-  <nav>
-    <ul class="pagination justify-content-center">
-      <li class="page-item" th:classappend="${ofertas.hasPrevious()} ? '': 'disabled'">
-        <a class="page-link" th:href="@{/alunos/ofertas(query=${query}, page=${ofertas.number - 1})}" aria-disabled="${!ofertas.hasPrevious()}">Anterior</a>
-      </li>
-      <li class="page-item" th:each="page : ${#numbers.sequence(0, ofertas.totalPages - 1)}" th:class="${ofertas.number == page ? 'active' : ''}">
-        <a class="page-link" th:href="@{/alunos/ofertas(query=${query}, page=${page})}">[[${page + 1}]]</a>
-      </li>
-      <li class="page-item" th:classappend="${ofertas.hasNext()} ? '' : 'disabled'">
-        <a class="page-link" th:href="@{/alunos/ofertas(query=${query}, page=${ofertas.number + 1})}" aria-disabled="${!ofertas.hasNext()}">Próximo</a>
-      </li>
-    </ul>
-  </nav>
 </div>
 
 <!-- Bootstrap JS -->

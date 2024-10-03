@@ -11,17 +11,11 @@ import com.estagioxx.EstagioX.services.AlunoService;
 import com.estagioxx.EstagioX.services.EmpresaService;
 import com.estagioxx.EstagioX.services.EstagioService;
 import com.estagioxx.EstagioX.services.OfertaEstagioService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
+
 
 @Controller
 @RequestMapping("/empresas")
@@ -145,13 +139,6 @@ public class EmpresaController {
         Page<OfertaEstagio> ofertasPage = ofertaEstagioService.findByEmpresas(empresa, PageRequest.of(page, size));
 
         ModelAndView mav = new ModelAndView("empresa/ofertas");
-        System.out.println("Ofertas encontradas: " + ofertasPage.getContent());
-        ofertasPage.getContent().forEach(oferta -> {
-                    System.out.println("Oferta ID: " + oferta.getIdOfertaEstagio());
-                    System.out.println("Atividade Principal: " + oferta.getAtividadePrincipal());
-                    System.out.println("CH Semanal: " + oferta.getChSemanal());
-                    System.out.println("Valor Pago: " + oferta.getValorPago());
-                });
 
         mav.addObject("ofertas", ofertasPage.getContent());
         mav.addObject("nomeEmpresa", empresa.getNome());

@@ -56,14 +56,21 @@ public class OfertaEstagioService {
     }
 
 
-    public Page<OfertaEstagio> search(String query, Long alunoId, Pageable pageable) {
+    public List<OfertaEstagio> search(String query, Long alunoId) {
+        List<OfertaEstagio> todasOfertas = ofertaEstagioRepository.findAll();
+
         List<Candidatura> candidaturas = candidaturaService.listarCandidaturasPorAluno(alunoId);
 
         Set<Long> ofertasCandidatas = candidaturas.stream()
                 .map(c -> c.getOfertaEstagio().getIdOfertaEstagio())
                 .collect(Collectors.toSet());
 
-        return ofertaEstagioRepository.findByQueryAndExcludingCandidaturas(query, ofertasCandidatas, pageable);
+        return todasOfertas.stream()
+                .filter(o -> !o.isPreenchida() &&
+                        !ofertasCandidatas.contains(o.getIdOfertaEstagio()) &&
+                        (o.getAtividadePrincipal().toLowerCase().contains(query.toLowerCase()) ||
+                                String.valueOf(o.getValorPago()).contains(query)))
+                .collect(Collectors.toList());
     }
 
     public void delete(Long idOfertaEstagio) {

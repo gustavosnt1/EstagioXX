@@ -1,11 +1,9 @@
 package com.estagioxx.EstagioX.controller;
 
 import com.estagioxx.EstagioX.entities.*;
-import com.estagioxx.EstagioX.repositories.EmpresaRepository;
 import com.estagioxx.EstagioX.services.CoordenadorService;
 import com.estagioxx.EstagioX.services.EmpresaService;
 import com.estagioxx.EstagioX.services.EstagioService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,18 +77,6 @@ public class CoordenadorController {
             return mav;
         }
     }
-
-/*    @GetMapping("/dashboard")
-    public ModelAndView mostrarDashboard() {
-
-        Coordenador coordenador = (Coordenador) httpSession.getAttribute("coordenador");
-
-        Page<OfertaEstagio> ofertas = coordenadorService.listarTodasOfertas(PageRequest.of(page, size));
-        ModelAndView mav = new ModelAndView("coordenador/dashboard");
-        mav.addObject("ofertas", ofertas);
-        mav.addObject("nomeCoordenador", coordenador.getNome());
-        return mav;
-    }*/
 
     @GetMapping("/dashboard")
     public ModelAndView mostrarDashboard(@RequestParam(defaultValue = "0") int page,

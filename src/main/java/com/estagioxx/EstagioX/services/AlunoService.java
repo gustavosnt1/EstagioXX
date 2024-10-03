@@ -1,7 +1,6 @@
 package com.estagioxx.EstagioX.services;
 
 import com.estagioxx.EstagioX.entities.Aluno;
-import com.estagioxx.EstagioX.entities.Coordenador;
 import com.estagioxx.EstagioX.entities.Role;
 import com.estagioxx.EstagioX.repositories.AlunoRepository;
 import com.estagioxx.EstagioX.repositories.RoleRepository;
@@ -55,7 +54,6 @@ public class AlunoService {
 
         if (alunoOptional.isPresent()) {
             Aluno aluno = alunoOptional.get();
-            // Utilize passwordEncoder para comparar a senha
             boolean passwordMatches = passwordEncoder.matches(password, aluno.getPassword());
             if (passwordMatches) {
                 return true; // Senha correta
@@ -65,7 +63,7 @@ public class AlunoService {
         } else {
             System.out.println("Usuário não encontrado: " + username);
         }
-        return false; // Retorna false se o usuário não existir ou a senha estiver incorreta
+        return false;
     }
 
     public Aluno findByUsername(String username) {

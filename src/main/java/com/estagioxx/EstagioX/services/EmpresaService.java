@@ -59,7 +59,6 @@ public class EmpresaService {
 
         if (empresaOptional.isPresent()) {
             Empresa empresa = empresaOptional.get();
-            // Utilize passwordEncoder para comparar a senha
             boolean passwordMatches = passwordEncoder.matches(password, empresa.getPassword());
             if (passwordMatches) {
                 return true; // Senha correta
@@ -69,7 +68,7 @@ public class EmpresaService {
         } else {
             System.out.println("Usuário não encontrado: " + username);
         }
-        return false; // Retorna false se o usuário não existir ou a senha estiver incorreta
+        return false;
     }
 
     public Empresa findByEmail(String email) {
