@@ -17,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -99,7 +98,6 @@ public class AlunoController {
         mav.addObject("nomeAluno", aluno.getNome());  // Adiciona o nome do aluno ao modelo
         return mav;
     }
-
 
     @GetMapping("/ofertas")
     public ModelAndView listarOfertas(@RequestParam(value = "query", required = false) String query,

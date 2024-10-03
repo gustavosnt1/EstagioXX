@@ -13,5 +13,6 @@ import java.util.Set;
 public interface OfertaEstagioRepository extends JpaRepository<OfertaEstagio, Long> {
     @Query("SELECT o FROM OfertaEstagio o WHERE (o.atividadePrincipal LIKE %:query% OR CAST(o.valorPago AS string) LIKE %:query%) AND o.idOfertaEstagio NOT IN :ofertasCandidatas")
     Page<OfertaEstagio> findByQueryAndExcludingCandidaturas(String query, Set<Long> ofertasCandidatas, Pageable pageable);
+    Page<OfertaEstagio> findByEmpresas(Empresa empresa, Pageable pageable);
     List<OfertaEstagio> findByEmpresas(Empresa empresa);
 }

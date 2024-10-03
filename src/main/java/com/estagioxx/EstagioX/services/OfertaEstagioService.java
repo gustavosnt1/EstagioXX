@@ -45,6 +45,10 @@ public class OfertaEstagioService {
         return ofertaEstagioRepository.findByEmpresas(empresa);
     }
 
+    public Page<OfertaEstagio> findByEmpresaWithPagination(Empresa empresa, Pageable pageable){
+        return ofertaEstagioRepository.findByEmpresas(empresa, pageable);
+    }
+
 
     public Page<OfertaEstagio> search(String query, Long alunoId, Pageable pageable) {
         List<Candidatura> candidaturas = candidaturaService.listarCandidaturasPorAluno(alunoId);

@@ -1,6 +1,5 @@
 package com.estagioxx.EstagioX.controller;
 
-
 import com.estagioxx.EstagioX.entities.*;
 import com.estagioxx.EstagioX.services.CoordenadorService;
 import com.estagioxx.EstagioX.services.EmpresaService;
@@ -18,8 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.io.IOException;
+
 import java.util.List;
 
 @Controller
@@ -101,7 +100,7 @@ public class CoordenadorController {
 
     @GetMapping("/listar-empresas")
     public ModelAndView listarEmpresas(@RequestParam(defaultValue = "0") int page,
-                                       @RequestParam(defaultValue = "10") int size){
+                                       @RequestParam(defaultValue = "3") int size){
         Pageable pageable = PageRequest.of(page, size);
         Page<Empresa> empresas = empresaService.findAll(pageable);
 

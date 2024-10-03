@@ -15,6 +15,9 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -128,12 +131,16 @@ public class EmpresaController {
     }
 
     @GetMapping("/listar-ofertas")
-    public ModelAndView listarOfertas() {
+    public ModelAndView listarOfertas(@RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "5") int size) {
         Empresa empresa = (Empresa) httpSession.getAttribute("empresa");
         if (empresa == null) {
             return new ModelAndView("redirect:/empresas/login");
         }
-        List<OfertaEstagio> ofertas = ofertaEstagioService.findByEmpresa(empresa);
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<OfertaEstagio> ofertas = ofertaEstagioService.findByEmpresaWithPagination(empresa, pageable);
+
         ModelAndView mav = new ModelAndView("empresa/ofertas");
         mav.addObject("ofertas", ofertas);
         mav.addObject("nomeEmpresa", empresa.getNome());
@@ -145,7 +152,6 @@ public class EmpresaController {
         ofertaEstagioService.delete(id);
         return new ModelAndView("redirect:/empresas/listar-ofertas");
     }
-
 
     @GetMapping("/fichaAluno/{id}")
     public ModelAndView verFichaAluno(@PathVariable Long id) {
