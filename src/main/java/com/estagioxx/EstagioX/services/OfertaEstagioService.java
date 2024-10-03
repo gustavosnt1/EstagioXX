@@ -6,6 +6,8 @@ import com.estagioxx.EstagioX.entities.OfertaEstagio;
 
 import com.estagioxx.EstagioX.repositories.OfertaEstagioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,8 +42,12 @@ public class OfertaEstagioService {
         return ofertaEstagioRepository.save(ofertaEstagio);
     }
 
-    public List<OfertaEstagio> findByEmpresa(Empresa empresa) {
+/*    public List<OfertaEstagio> findByEmpresa(Empresa empresa) {
         return ofertaEstagioRepository.findByEmpresas(empresa);
+    }*/
+
+    public Page<OfertaEstagio> findByEmpresas(Empresa empresa, Pageable pageable) {
+        return ofertaEstagioRepository.findByEmpresas(empresa, pageable);
     }
 
 

@@ -15,6 +15,9 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -130,17 +133,34 @@ public class EmpresaController {
     }
 
     @GetMapping("/listar-ofertas")
-    public ModelAndView listarOfertas() {
+    public ModelAndView listarOfertas(@RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "2") int size) {
         Empresa empresa = (Empresa) httpSession.getAttribute("empresa");
+
         if (empresa == null) {
             return new ModelAndView("redirect:/empresas/login");
         }
-        List<OfertaEstagio> ofertas = ofertaEstagioService.findByEmpresa(empresa);
+
+        Page<OfertaEstagio> ofertasPage = ofertaEstagioService.findByEmpresas(empresa, PageRequest.of(page, size));
+
         ModelAndView mav = new ModelAndView("empresa/ofertas");
-        mav.addObject("ofertas", ofertas);
+        System.out.println("Ofertas encontradas: " + ofertasPage.getContent());
+        ofertasPage.getContent().forEach(oferta -> {
+                    System.out.println("Oferta ID: " + oferta.getIdOfertaEstagio());
+                    System.out.println("Atividade Principal: " + oferta.getAtividadePrincipal());
+                    System.out.println("CH Semanal: " + oferta.getChSemanal());
+                    System.out.println("Valor Pago: " + oferta.getValorPago());
+                });
+
+        mav.addObject("ofertas", ofertasPage.getContent());
         mav.addObject("nomeEmpresa", empresa.getNome());
+        mav.addObject("currentPage", page);
+        mav.addObject("totalPages", ofertasPage.getTotalPages());
+        mav.addObject("totalItems", ofertasPage.getTotalElements());
+
         return mav;
     }
+
 
     @PostMapping("/deletar-oferta/{id}")
     public ModelAndView deletarOferta(@PathVariable Long id) {
