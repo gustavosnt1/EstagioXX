@@ -26,8 +26,8 @@
       <td th:text="${estagio.aluno.nome} + ' ' + ${estagio.aluno.sobrenome}"></td>
       <td th:text="${estagio.ofertaEstagio.idOfertaEstagio}"></td>
       <td th:text="${estagio.ofertaEstagio.atividadePrincipal}"></td>
-      <td th:text="${estagio.dataInicio}"></td>
-      <td th:text="${estagio.dataTermino}"></td>
+      <td th:text="${estagio.getDataInicioFormatada()}"></td>
+      <td th:text="${estagio.getDataTerminoFormatada()}"></td>
       <td th:text="${estagio.valorEstagio}"></td>
       <td>
         <a class="btn btn-primary" th:href="@{baixar-termo-estagio/{estagioId}(estagioId=${estagio.idEstagio})}" title="Baixar Termo de Estágio">
@@ -37,20 +37,26 @@
     </tr>
     </tbody>
   </table>
-  <nav>
+  <!-- Componente de paginação -->
+  <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
-      <li class="page-item" th:classappend="${page.hasPrevious()} ? '': 'disabled'">
-        <a class="page-link" th:href="@{/listar-estagios(page=${page.number - 1}, size=${page.size})}">Anterior</a>
+      <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+        <a class="page-link" th:href="@{/coordenadores/listar-estagios(page=${currentPage - 1}, size=5)}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
       </li>
-      <li class="page-item" th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
-          th:classappend="${i == page.number} ? 'active'">
-        <a class="page-link" th:href="@{/listar-estagios(page=${i}, size=${page.size})}" th:text="${i + 1}"></a>
+      <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+          th:classappend="${i == currentPage} ? 'active'">
+        <a class="page-link" th:href="@{/coordenadores/listar-estagios(page=${i}, size=5)}" th:text="${i + 1}">1</a>
       </li>
-      <li class="page-item" th:classappend="${page.hasNext()} ? '' : 'disabled'">
-        <a class="page-link" th:href="@{/listar-estagios(page=${page.number + 1}, size=${page.size})}">Próximo</a>
+      <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+        <a class="page-link" th:href="@{/coordenadores/listar-estagios(page=${currentPage + 1}, size=5)}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
       </li>
-      </ul>
-    </nav>
+    </ul>
+  </nav>
+</div>
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>

@@ -16,6 +16,10 @@ public class Coordenador implements Serializable {
     @Column(name = "idCoordenador")
     private Long idCoordenador;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
+
     @NotBlank(message = "O nome não pode estar vazio.")
     @Column(name = "nomeCoordenador", nullable = false)
     private String nome;
@@ -45,6 +49,14 @@ public class Coordenador implements Serializable {
 
     public void setIdCoordenador(Long idCoordenador) {
         this.idCoordenador = idCoordenador;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getNome() {

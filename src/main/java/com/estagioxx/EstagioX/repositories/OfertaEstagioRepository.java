@@ -15,4 +15,5 @@ public interface OfertaEstagioRepository extends JpaRepository<OfertaEstagio, Lo
     Page<OfertaEstagio> findByQueryAndExcludingCandidaturas(String query, Set<Long> ofertasCandidatas, Pageable pageable);
     Page<OfertaEstagio> findByEmpresas(Empresa empresa, Pageable pageable);
     List<OfertaEstagio> findByEmpresas(Empresa empresa);
+    Page<OfertaEstagio> findByEmpresas(Empresa empresa, Pageable pageable);
 }

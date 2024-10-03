@@ -1,6 +1,7 @@
 package com.estagioxx.EstagioX.controller;
 
 import com.estagioxx.EstagioX.entities.*;
+import com.estagioxx.EstagioX.repositories.EmpresaRepository;
 import com.estagioxx.EstagioX.services.CoordenadorService;
 import com.estagioxx.EstagioX.services.EmpresaService;
 import com.estagioxx.EstagioX.services.EstagioService;
@@ -79,14 +80,29 @@ public class CoordenadorController {
         }
     }
 
-    @GetMapping("/dashboard")
-    public ModelAndView mostrarDashboard(@RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "3") int size) {
+/*    @GetMapping("/dashboard")
+    public ModelAndView mostrarDashboard() {
+
         Coordenador coordenador = (Coordenador) httpSession.getAttribute("coordenador");
 
         Page<OfertaEstagio> ofertas = coordenadorService.listarTodasOfertas(PageRequest.of(page, size));
         ModelAndView mav = new ModelAndView("coordenador/dashboard");
         mav.addObject("ofertas", ofertas);
+        mav.addObject("nomeCoordenador", coordenador.getNome());
+        return mav;
+    }*/
+
+    @GetMapping("/dashboard")
+    public ModelAndView mostrarDashboard(@RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "2") int size) {
+        Coordenador coordenador = (Coordenador) httpSession.getAttribute("coordenador");
+
+        Page<OfertaEstagio> ofertasPaginadas = coordenadorService.listarTodasOfertasPaginadas(PageRequest.of(page, size));
+
+        ModelAndView mav = new ModelAndView("coordenador/dashboard");
+        mav.addObject("ofertas", ofertasPaginadas.getContent()); // Ofertas da página atual
+        mav.addObject("totalPages", ofertasPaginadas.getTotalPages()); // Total de páginas
+        mav.addObject("currentPage", ofertasPaginadas.getNumber()); // Página atual
         mav.addObject("nomeCoordenador", coordenador.getNome());
         return mav;
     }
@@ -101,13 +117,16 @@ public class CoordenadorController {
 
     @GetMapping("/listar-empresas")
     public ModelAndView listarEmpresas(@RequestParam(defaultValue = "0") int page,
-                                       @RequestParam(defaultValue = "3") int size){
+                                       @RequestParam(defaultValue = "2") int size) {
+        Coordenador coordenador = (Coordenador) httpSession.getAttribute("coordenador");
+
         Pageable pageable = PageRequest.of(page, size);
-        Page<Empresa> empresas = empresaService.findAll(pageable);
+        Page<Empresa> empresasPage = empresaService.findAll(pageable);
 
         ModelAndView mav = new ModelAndView("coordenador/listagem-empresa");
-        mav.addObject("empresas", empresas);
-        mav.addObject("nomeCoordenador","Nome do Coordenador");
+        mav.addObject("empresas", empresasPage.getContent());
+        mav.addObject("nomeCoordenador", coordenador.getNome());
+        mav.addObject("empresasPage", empresasPage); // Adiciona a página de empresas para a view
 
         return mav;
     }
@@ -122,23 +141,42 @@ public class CoordenadorController {
 
     @PostMapping("/empresas/atualizar")
     public ModelAndView atualizar(@RequestParam("idEmpresa") Long id,
-                                  @Valid @ModelAttribute Empresa empresa,
+                                  @Valid @ModelAttribute("empresa") Empresa empresa,
+                                  BindingResult bindingResult,
                                   @RequestParam(value = "pdfEmpresa", required = false) MultipartFile pdfEmpresa) throws IOException {
+        if (bindingResult.hasErrors()) {
+            ModelAndView mav = new ModelAndView("coordenador/editar-empresa");
+            mav.addObject("empresa", empresa);
+            return mav;
+        }
+
         if (pdfEmpresa != null && !pdfEmpresa.isEmpty()) {
             empresa.setPdfEmpresa(pdfEmpresa.getBytes());
         }
+
         empresaService.update(id, empresa);
+
         return new ModelAndView("redirect:/coordenadores/dashboard");
     }
 
+    @PostMapping("/empresas/bloquear/{id}")
+    public String bloquearEmpresa(@PathVariable Long id) {
+        empresaService.bloquearEmpresa(id);
+        return "redirect:/coordenadores/listar-empresas";
+    }
+
     @GetMapping("/listar-estagios")
-    public ModelAndView listarEstagios(@RequestParam(defaultValue = "0") int page,
-                                       @RequestParam(defaultValue = "10") int size){
-        Page<Estagio> estagios = coordenadorService.listarEstagios(PageRequest.of(page, size));
+    public ModelAndView listarEstagios( @RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(defaultValue = "5") int size) {
+        Coordenador coordenador = (Coordenador) httpSession.getAttribute("coordenador");
+
+        Page<Estagio> estagiosPage = coordenadorService.listarEstagios(PageRequest.of(page, size));
         ModelAndView mav = new ModelAndView("coordenador/listagem-estagio");
 
-        mav.addObject("estagios", estagios.getContent());
-        mav.addObject("page", estagios);
+        mav.addObject("estagios", estagiosPage.getContent());
+        mav.addObject("totalPages", estagiosPage.getTotalPages());
+        mav.addObject("currentPage", page);
+        mav.addObject("nomeCoordenador", coordenador.getNome());
         return mav;
     }
 

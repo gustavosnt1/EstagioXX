@@ -18,6 +18,10 @@ public class Aluno implements Serializable {
     @Column(name = "idAluno")
     private Long idAluno;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
+
     @NotBlank(message = "O nome não pode estar vazio.")
     @Column(name = "nomeAluno",nullable = false)
     private String nome;
@@ -64,6 +68,14 @@ public class Aluno implements Serializable {
 
     public void setIdAluno(Long idAluno) {
         this.idAluno = idAluno;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getNome() {

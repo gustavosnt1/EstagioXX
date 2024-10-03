@@ -37,22 +37,23 @@
             <td th:text="${empresa.urlEmpresa}"></td>
             <td>
                 <a class="btn btn-primary" th:href="@{/coordenadores/empresas/editar/{id}(id=${empresa.idEmpresa})}">Editar</a>
+                <form th:action="@{/coordenadores/empresas/bloquear/{id}(id=${empresa.idEmpresa})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Bloquear</button></form>
             </td>
         </tr>
         </tbody>
     </table>
-    <!-- Navegação de Paginação -->
-    <nav>
+    <!-- Controles de paginação -->
+    <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${empresas.hasPrevious()} ? '': 'disabled'">
-                <a class="page-link" th:href="@{/listar-empresas(page=${empresas.number - 1}, size=${empresas.size})}">Anterior</a>
+            <li class="page-item" th:classappend="${empresasPage.hasPrevious()} ? '' : 'disabled'">
+                <a class="page-link" th:href="@{/coordenadores/listar-empresas(page=${empresasPage.number - 1}, size=${empresasPage.size})}" tabindex="-1">Anterior</a>
             </li>
-            <li class="page-item" th:each="i : ${#numbers.sequence(0, empresas.totalPages - 1)}"
-                th:classappend="${i == empresas.number} ? 'active'">
-                <a class="page-link" th:href="@{/listar-empresas(page=${i}, size=${empresas.size})}" th:text="${i + 1}"></a>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, empresasPage.totalPages - 1)}" th:classappend="${i == empresasPage.number} ? 'active' : ''">
+                <a class="page-link" th:href="@{/coordenadores/listar-empresas(page=${i}, size=${empresasPage.size})}" th:text="${i + 1}"></a>
             </li>
-            <li class="page-item" th:classappend="${empresas.hasNext()} ? '': 'disabled'">
-                <a class="page-link" th:href="@{/listar-empresas(page=${empresas.number + 1}, size=${empresas.size})}">Próximo</a>
+            <li class="page-item" th:classappend="${empresasPage.hasNext()} ? '' : 'disabled'">
+                <a class="page-link" th:href="@{/coordenadores/listar-empresas(page=${empresasPage.number + 1}, size=${empresasPage.size})}">Próxima</a>
             </li>
         </ul>
     </nav>

@@ -17,6 +17,10 @@ public class Empresa implements Serializable {
     @Column(name = "idEmpresa")
     private Long idEmpresa;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
+
     @NotBlank(message = "O nome da empresa não pode estar vazio.")
     @Column(name = "nomeEmpresa", nullable = false)
     private String nome;
@@ -54,6 +58,9 @@ public class Empresa implements Serializable {
     @Column(name = "urlEmpresa", nullable = false)
     private String urlEmpresa;
 
+    @Column(name = "bloqueada", nullable = false)
+    private boolean bloqueada = false;
+
 
     @Column(name = "pdfEmpresa", nullable = true)
     private byte[] pdfEmpresa;
@@ -67,11 +74,12 @@ public class Empresa implements Serializable {
 
     }
 
-    public Empresa(Long idEmpresa, String nome, String cnpj, String email, String telefone, String endereco, String pessoaContato, String atividadePrincipal, String urlEmpresa, byte[] pdfEmpresa) {
+    public Empresa(Long idEmpresa, String nome, String cnpj, String email, String telefone, String endereco, String pessoaContato, String atividadePrincipal, String urlEmpresa, byte[] pdfEmpresa, String password) {
         this.idEmpresa = idEmpresa;
         this.nome = nome;
         this.cnpj = cnpj;
         this.email = email;
+        this.password = password;
         this.telefone = telefone;
         this.endereco = endereco;
         this.pessoaContato = pessoaContato;
@@ -86,6 +94,14 @@ public class Empresa implements Serializable {
 
     public void setIdEmpresa(Long idEmpresa) {
         this.idEmpresa = idEmpresa;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getNome() {
@@ -168,6 +184,13 @@ public class Empresa implements Serializable {
         this.pdfEmpresa = pdfEmpresa;
     }
 
+    public boolean isBloqueada() {
+        return bloqueada;
+    }
+
+    public void setBloqueada(boolean bloqueada) {
+        this.bloqueada = bloqueada;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
     Optional<Empresa> findByEmail(String email);
-    Page<Empresa> findByAtividadePrincipal(String atividadePrincipal, Pageable pageable);
+    Page<Empresa> findAll(Pageable pageable);
 }

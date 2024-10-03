@@ -1,8 +1,12 @@
 package com.estagioxx.EstagioX.services;
 
 import com.estagioxx.EstagioX.entities.Aluno;
+import com.estagioxx.EstagioX.entities.Coordenador;
+import com.estagioxx.EstagioX.entities.Role;
 import com.estagioxx.EstagioX.repositories.AlunoRepository;
+import com.estagioxx.EstagioX.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +17,12 @@ public class AlunoService {
 
     @Autowired
     private AlunoRepository alunoRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<Aluno> findAll() {
         return alunoRepository.findAll();
@@ -28,20 +38,34 @@ public class AlunoService {
     }
 
     public Aluno save(Aluno aluno) {
+
+        String encodedPassword = passwordEncoder.encode(aluno.getPassword());
+        aluno.setPassword(encodedPassword); // Definir a senha criptografada
+
+        Role roleAluno = roleRepository.findByName("ROLE_ALUNO");
+        aluno.setRole(roleAluno);
+
         return alunoRepository.save(aluno);
     }
 
 
     public boolean authenticate(String username, String password) {
+        System.out.println("Tentando autenticar usuário: " + username);
         Optional<Aluno> alunoOptional = alunoRepository.findByUsername(username);
-
 
         if (alunoOptional.isPresent()) {
             Aluno aluno = alunoOptional.get();
-            return aluno.getPassword().equals(password);
+            // Utilize passwordEncoder para comparar a senha
+            boolean passwordMatches = passwordEncoder.matches(password, aluno.getPassword());
+            if (passwordMatches) {
+                return true; // Senha correta
+            } else {
+                System.out.println("Senha incorreta para o usuário: " + username);
+            }
+        } else {
+            System.out.println("Usuário não encontrado: " + username);
         }
-
-        return false;
+        return false; // Retorna false se o usuário não existir ou a senha estiver incorreta
     }
 
     public Aluno findByUsername(String username) {
