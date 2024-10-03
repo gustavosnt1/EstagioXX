@@ -27,8 +27,8 @@
       <td th:text="${estagio.aluno.nome} + ' ' + ${estagio.aluno.sobrenome}"></td>
       <td th:text="${estagio.ofertaEstagio.idOfertaEstagio}"></td>
       <td th:text="${estagio.ofertaEstagio.atividadePrincipal}"></td>
-      <td th:text="${estagio.dataInicio}"></td>
-      <td th:text="${estagio.dataTermino}"></td>
+      <td th:text="${estagio.getDataInicioFormatada()}"></td>
+      <td th:text="${estagio.getDataTerminoFormatada()}"></td>
       <td th:text="${estagio.valorEstagio}"></td>
       <td>
         <a class="btn btn-primary" th:href="@{baixar-termo-estagio/{estagioId}(estagioId=${estagio.idEstagio})}" title="Baixar Termo de Estágio">

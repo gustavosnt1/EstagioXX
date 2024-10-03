@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @Entity
@@ -92,5 +93,15 @@ public class Estagio implements Serializable {
 
     public void setTermoEstagio(byte[] termoEstagio) {
         this.termoEstagio = termoEstagio;
+    }
+    
+    public String getDataInicioFormatada() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return this.dataInicio.format(formatter);
+    }
+
+    public String getDataTerminoFormatada() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return this.dataTermino.format(formatter);
     }
 }
