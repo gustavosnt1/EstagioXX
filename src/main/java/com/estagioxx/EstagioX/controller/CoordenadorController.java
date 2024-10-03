@@ -80,10 +80,11 @@ public class CoordenadorController {
     }
 
     @GetMapping("/dashboard")
-    public ModelAndView mostrarDashboard() {
+    public ModelAndView mostrarDashboard(@RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "3") int size) {
         Coordenador coordenador = (Coordenador) httpSession.getAttribute("coordenador");
 
-        List<OfertaEstagio> ofertas = coordenadorService.listarTodasOfertas();
+        Page<OfertaEstagio> ofertas = coordenadorService.listarTodasOfertas(PageRequest.of(page, size));
         ModelAndView mav = new ModelAndView("coordenador/dashboard");
         mav.addObject("ofertas", ofertas);
         mav.addObject("nomeCoordenador", coordenador.getNome());
