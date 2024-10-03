@@ -9,15 +9,20 @@ import com.estagioxx.EstagioX.services.OfertaEstagioService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static java.util.Locale.filter;
 
 @Controller
 @RequestMapping ("/alunos")
@@ -95,23 +100,20 @@ public class AlunoController {
         return mav;
     }
 
-
     @GetMapping("/ofertas")
-    public ModelAndView listarOfertas(@RequestParam(value = "query", required = false) String query) {
+    public ModelAndView listarOfertas(@RequestParam(value = "query", required = false) String query,
+                                      @PageableDefault(size = 10) Pageable pageable){
         Aluno aluno = (Aluno) httpSession.getAttribute("aluno");
 
         if (aluno == null) {
             return new ModelAndView("redirect:/alunos/login");
         }
 
-        List<OfertaEstagio> ofertasDisponiveis;
+        Page<OfertaEstagio> ofertasDisponiveis;
 
         if (query != null && !query.isEmpty()) {
 
-            ofertasDisponiveis = ofertaEstagioService.search(query, aluno.getIdAluno())
-                    .stream()
-                    .filter(o -> !o.isPreenchida())
-                    .collect(Collectors.toList());
+            ofertasDisponiveis = ofertaEstagioService.search(query, aluno.getIdAluno(), pageable);
         } else {
             List<Candidatura> candidaturas = candidaturaService.listarCandidaturasPorAluno(aluno.getIdAluno());
 
@@ -119,16 +121,21 @@ public class AlunoController {
                     .map(c -> c.getOfertaEstagio().getIdOfertaEstagio())
                     .collect(Collectors.toSet());
 
-            ofertasDisponiveis = ofertaEstagioService.findAll().stream()
-                    .filter(o -> !o.isPreenchida())
+            List<OfertaEstagio> todasOfertas = ofertaEstagioService.findAll();
+
+            List<OfertaEstagio> filtradas = todasOfertas.stream()
                     .filter(o -> !ofertasCandidatas.contains(o.getIdOfertaEstagio()))
                     .collect(Collectors.toList());
+
+            int start = (int) pageable.getOffset();
+            int end = Math.min((start + pageable.getPageSize()), filtradas.size());
+            ofertasDisponiveis = new PageImpl<>(filtradas.subList(start, end), pageable, filtradas.size());
         }
 
         ModelAndView mav = new ModelAndView("aluno/listar-ofertas");
         mav.addObject("ofertas", ofertasDisponiveis);
         mav.addObject("query", query);
-        mav.addObject("nomeAluno", aluno.getNome()); //
+        mav.addObject("nomeAluno", aluno.getNome());
         return mav;
     }
 

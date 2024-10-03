@@ -25,6 +25,9 @@ public class CoordenadorService {
     private EstagioRepository estagioRepository;
 
     @Autowired
+    private EstagioRepository estagioRepository;
+
+    @Autowired
     private EstagioService estagioService;
     @Autowired
     private RoleRepository roleRepository;
@@ -79,6 +82,7 @@ public class CoordenadorService {
     public List<Candidatura> listarCandidatosPorOferta(Long ofertaId) {
         return candidaturaRepository.findByOfertaEstagio_IdOfertaEstagio(ofertaId);
     }
+
 
     /*public List<Estagio> listarEstagios() {
         return estagioService.listarEstagios();

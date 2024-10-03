@@ -135,6 +135,7 @@ public class EmpresaController {
     @GetMapping("/listar-ofertas")
     public ModelAndView listarOfertas(@RequestParam(defaultValue = "0") int page,
                                       @RequestParam(defaultValue = "2") int size) {
+
         Empresa empresa = (Empresa) httpSession.getAttribute("empresa");
 
         if (empresa == null) {
@@ -167,7 +168,6 @@ public class EmpresaController {
         ofertaEstagioService.delete(id);
         return new ModelAndView("redirect:/empresas/listar-ofertas");
     }
-
 
     @GetMapping("/fichaAluno/{id}")
     public ModelAndView verFichaAluno(@PathVariable Long id) {

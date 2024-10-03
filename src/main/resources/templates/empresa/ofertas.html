@@ -43,6 +43,19 @@
     </tr>
     </tbody>
   </table>
+  <nav>
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:class="${currentPage == 0} ? 'disabled'">
+        <a class="page-link" th:href="@{/empresas/listar-ofertas(page=${currentPage - 1}, size=${5})}">Anterior</a>
+      </li>
+      <li class="page-item" th:each="i : ${#numbers.sequence(0, empresas.totalPages - 1)}" th:class="${i == currentPage} ? 'active'">
+        <a class="page-link" th:href="@{/empresas/listar-ofertas(page=${i}, size=${5})}" th:text="${i + 1}"></a>
+      </li>
+      <li class="page-item" th:class="${currentPage + 1 == 1} ? 'disabled'">
+        <a class="page-link" th:href="@{/empresas/listar-ofertas(page=${currentPage + 1}, size=${5})}">Próximo</a>
+      </li>
+    </ul>
+  </nav>
 </div>
   <div class="mt-4 d-flex justify-content-center align-items-center">
     <div class="text-center">

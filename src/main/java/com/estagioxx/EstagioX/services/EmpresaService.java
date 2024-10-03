@@ -109,7 +109,6 @@ public class EmpresaService {
             throw new RuntimeException("Empresa não encontrada para o ID: " + id);
         }
     }
-
     public void bloquearEmpresa(Long id) {
         Empresa empresa = empresaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Empresa não encontrada"));

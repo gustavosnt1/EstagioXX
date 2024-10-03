@@ -1,6 +1,5 @@
 package com.estagioxx.EstagioX.controller;
 
-
 import com.estagioxx.EstagioX.entities.*;
 import com.estagioxx.EstagioX.repositories.EmpresaRepository;
 import com.estagioxx.EstagioX.services.CoordenadorService;
@@ -19,8 +18,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.io.IOException;
+
 import java.util.List;
 
 @Controller
@@ -83,9 +82,10 @@ public class CoordenadorController {
 
 /*    @GetMapping("/dashboard")
     public ModelAndView mostrarDashboard() {
+
         Coordenador coordenador = (Coordenador) httpSession.getAttribute("coordenador");
 
-        List<OfertaEstagio> ofertas = coordenadorService.listarTodasOfertas();
+        Page<OfertaEstagio> ofertas = coordenadorService.listarTodasOfertas(PageRequest.of(page, size));
         ModelAndView mav = new ModelAndView("coordenador/dashboard");
         mav.addObject("ofertas", ofertas);
         mav.addObject("nomeCoordenador", coordenador.getNome());
@@ -177,7 +177,6 @@ public class CoordenadorController {
         mav.addObject("totalPages", estagiosPage.getTotalPages());
         mav.addObject("currentPage", page);
         mav.addObject("nomeCoordenador", coordenador.getNome());
-
         return mav;
     }
 

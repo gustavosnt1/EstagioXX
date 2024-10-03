@@ -25,7 +25,6 @@ public class OfertaEstagioController {
     @Autowired
     private AlunoService alunoService;
 
-
     @PostMapping("/candidatar")
     public String candidatar(@RequestParam Long idOfertaEstagio, HttpSession session) {
         Long idAluno = (Long) session.getAttribute("idAluno");
